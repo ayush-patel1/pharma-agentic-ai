@@ -22,7 +22,7 @@ def search_mock_papers(drug: str, disease: str, top_k: int = 5) -> List[Dict]:
     """
     # Get the path to mock_papers.json
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    data_path = os.path.join(os.path.dirname(current_dir), "data", "mock_papers.json")
+    data_path = os.path.join(current_dir, "data", "mock_papers.json")
     
     with open(data_path) as f:
         papers = json.load(f)

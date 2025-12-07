@@ -26,10 +26,10 @@ Your backend uses LangGraph, LangChain, and Gemini API which creates a large bun
 3. Connect your GitHub repository: `ayushdev2/pharma-agentic-ai`
 4. Configure:
    - **Name**: `pharma-agentic-ai`
-   - **Root Directory**: leave empty
+   - **Root Directory**: `backend`
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
    - **Plan**: Free tier
 
 5. Add Environment Variable:
@@ -48,7 +48,7 @@ Your backend uses LangGraph, LangChain, and Gemini API which creates a large bun
 5. Configure build settings (auto-detected from `netlify.toml`):
    - **Base directory**: `frontend`
    - **Build command**: `npm install && npm run build`
-   - **Publish directory**: `frontend/dist`
+   - **Publish directory**: `dist` (relative to base directory)
 
 6. Add Environment Variable:
    - Click "Add environment variables"
@@ -70,6 +70,14 @@ Your backend uses LangGraph, LangChain, and Gemini API which creates a large bun
 - Node version
 
 ### Troubleshooting
+
+**Deploy fails with "No such directory" or path not found?**
+- The `netlify.toml` sets `base = "frontend"` and `publish = "dist"`
+- This means Netlify looks for `frontend/dist` (NOT `frontend/frontend/dist`)
+- If Netlify UI shows wrong path, override it in Site Settings → Build & Deploy:
+  - Base directory: `frontend`
+  - Publish directory: `dist` (just "dist", not "frontend/dist")
+- Clear any trailing `}` or malformed characters in the UI settings
 
 **Backend not responding?**
 - Check Render logs for errors

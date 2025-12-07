@@ -3,11 +3,10 @@
 }
 
 .about-hero {
-  padding: var(--spacing-3xl) 0;
-  background: linear-gradient(135deg, 
-    rgba(79, 124, 172, 0.1) 0%, 
-    rgba(156, 136, 255, 0.1) 100%);
+  padding: 5rem 0;
+  background: radial-gradient(ellipse at center, rgba(56, 233, 176, 0.1) 0%, #0D1418 60%);
   text-align: center;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .page-title {
@@ -25,14 +24,14 @@
 
 /* Overview Section */
 .overview-section {
-  padding: var(--spacing-3xl) 0;
-  background: white;
+  padding: 3.75rem 2rem;
+  background: linear-gradient(180deg, #102027 0%, #0D1418 100%);
 }
 
 .content-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: var(--spacing-3xl);
+  gap: 4rem;
   align-items: start;
 }
 
@@ -70,19 +69,22 @@
 }
 
 .content-visual {
-  padding: var(--spacing-2xl);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: 1.5rem;
+  background: #141A1F;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
 }
 
 .stat-box {
   text-align: center;
-  padding: var(--spacing-xl);
-  background: linear-gradient(135deg, 
-    rgba(79, 124, 172, 0.05) 0%, 
-    rgba(156, 136, 255, 0.05) 100%);
-  border-radius: var(--radius-md);
+  padding: 2rem;
+  background: rgba(56, 233, 176, 0.05);
+  border-radius: 14px;
+  border: 1px solid rgba(56, 233, 176, 0.15);
+  box-shadow: inset 0 0 20px var(--color-glow);
 }
 
 .stat-big {
@@ -100,14 +102,27 @@
 
 /* Architecture Section */
 .architecture-section {
-  padding: var(--spacing-3xl) 0;
+  padding: 4.5rem 1.5rem;
+  background: linear-gradient(180deg, #0D1418 0%, #102027 100%);
+  text-align: center;
+}
+
+.architecture-section .section-title,
+.architecture-section .section-subtitle {
+  text-align: center;
 }
 
 .architecture-diagram {
-  padding: var(--spacing-3xl);
-  background: white;
+  padding: 2.5rem 2rem;
+  background: #141A1F;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 2rem auto 0;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 30px var(--color-glow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .arch-flow {
@@ -119,21 +134,26 @@
 
 .arch-node {
   text-align: center;
-  padding: var(--spacing-xl);
-  border-radius: var(--radius-lg);
-  min-width: 250px;
+  padding: 1.5rem 2rem;
+  border-radius: 14px;
+  min-width: 220px;
+  border: 1px solid var(--color-border);
+  margin: 0 auto;
 }
 
 .user-node {
-  background: linear-gradient(135deg, rgba(79, 124, 172, 0.1), rgba(119, 166, 182, 0.1));
+  background: rgba(44, 212, 138, 0.08);
+  border: 1px solid rgba(44, 212, 138, 0.3);
 }
 
 .api-node {
-  background: linear-gradient(135deg, rgba(119, 166, 182, 0.1), rgba(156, 136, 255, 0.1));
+  background: rgba(134, 255, 218, 0.08);
+  border: 1px solid rgba(134, 255, 218, 0.3);
 }
 
 .output-node {
-  background: linear-gradient(135deg, rgba(156, 136, 255, 0.1), rgba(79, 124, 172, 0.1));
+  background: rgba(44, 212, 138, 0.08);
+  border: 1px solid rgba(44, 212, 138, 0.3);
 }
 
 .node-icon {
@@ -160,32 +180,41 @@
 }
 
 .arch-agents {
-  padding: var(--spacing-xl);
-  background: linear-gradient(135deg, 
-    rgba(79, 124, 172, 0.05) 0%, 
-    rgba(156, 136, 255, 0.05) 100%);
+  padding: 1.75rem;
+  background: rgba(44, 212, 138, 0.03);
   border-radius: var(--radius-lg);
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid rgba(44, 212, 138, 0.15);
 }
 
 .agent-box {
-  padding: var(--spacing-lg);
-  background: white;
-  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  background: #141A1F;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: var(--shadow-sm);
-  border: 2px solid var(--color-border);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 0 10px var(--color-glow);
+  border: 2px solid rgba(56, 233, 176, 0.2);
+  margin: 0 auto;
 }
 
 .master-agent {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 1.5rem;
   border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(44, 212, 138, 0.3);
+  animation: breathe 3s ease-in-out infinite;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .agent-connections {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-md);
+  gap: 1rem;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .agent-icon {
@@ -206,20 +235,24 @@
 
 /* Technology Section */
 .technology-section {
-  padding: var(--spacing-3xl) 0;
-  background: white;
+  padding: 3.75rem 2rem;
+  background: linear-gradient(180deg, #102027 0%, #0D1418 100%);
+  border-top: 1px solid var(--color-border);
 }
 
 .tech-details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-xl);
+  gap: 1.5rem;
 }
 
 .tech-detail-card {
-  padding: var(--spacing-2xl);
+  padding: 2rem;
   text-align: center;
-  transition: transform var(--transition-base);
+  transition: all var(--transition-base);
+  background: #141A1F;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
 }
 
 .tech-detail-card:hover {
@@ -229,6 +262,7 @@
 .tech-card-icon {
   font-size: 3rem;
   margin-bottom: var(--spacing-lg);
+  filter: drop-shadow(0 0 15px rgba(44, 212, 138, 0.6));
 }
 
 .tech-detail-card h3 {
@@ -243,19 +277,23 @@
 
 /* Use Cases Section */
 .use-cases-section {
-  padding: var(--spacing-3xl) 0;
+  padding: 3.75rem 2rem;
+  background: linear-gradient(180deg, #0D1418 0%, #0B1217 100%);
 }
 
 .use-cases-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--spacing-xl);
+  gap: 1.5rem;
 }
 
 .use-case-card {
-  padding: var(--spacing-2xl);
+  padding: 2rem;
   text-align: center;
   transition: all var(--transition-base);
+  background: #141A1F;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
 }
 
 .use-case-card:hover {
@@ -281,16 +319,19 @@
 
 /* CTA Section */
 .about-cta-section {
-  padding: var(--spacing-3xl) 0;
-  background: white;
+  padding: 3.75rem 2rem;
+  background: linear-gradient(180deg, #0B1217 0%, #0D1418 100%);
 }
 
 .cta-box {
   text-align: center;
-  padding: var(--spacing-3xl);
-  background: linear-gradient(135deg, 
-    rgba(79, 124, 172, 0.05) 0%, 
-    rgba(156, 136, 255, 0.05) 100%);
+  padding: 3rem;
+  background: #141A1F;
+  border: 1px solid rgba(56, 233, 176, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 30px var(--color-glow);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .cta-box h2 {

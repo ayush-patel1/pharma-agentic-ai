@@ -1,24 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Color Palette */
-  --color-primary: #4F7CAC;
-  --color-primary-dark: #3d628a;
-  --color-primary-light: #6a94c2;
-  --color-secondary: #77A6B6;
-  --color-accent: #9C88FF;
-  --color-accent-dark: #7d6acc;
-  --color-bg: #F5F8FA;
-  --color-bg-white: #FFFFFF;
-  --color-bg-card: #FFFFFF;
-  --color-text-primary: #1a2332;
-  --color-text-secondary: #5a6a7a;
-  --color-text-muted: #8b98a8;
-  --color-border: #e1e8ed;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
+  /* Premium Clinical Color Palette */
+  --color-primary: #2CD48A;
+  --color-primary-dark: #1FA774;
+  --color-primary-light: #3EFFA2;
+  --color-secondary: #1FA774;
+  --color-accent: #86FFDA;
+  --color-accent-dark: #5AF8FF;
+  --color-bg: #0D1418;
+  --color-bg-secondary: #102027;
+  --color-bg-tertiary: #0B1217;
+  --color-bg-white: #141A1F;
+  --color-bg-card: #141A1F;
+  --color-text-primary: #E8FFF5;
+  --color-text-secondary: #9FB3A9;
+  --color-text-muted: #6F8280;
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-glow: rgba(56, 233, 176, 0.1);
+  --color-success: #2CD48A;
+  --color-warning: #FFB84D;
+  --color-error: #FF6B6B;
+  --color-info: #5AF8FF;
   
   /* Spacing System */
   --spacing-xs: 0.25rem;
@@ -30,7 +33,7 @@
   --spacing-3xl: 4rem;
   
   /* Typography */
-  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-primary: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
   
   /* Border Radius */
@@ -40,12 +43,14 @@
   --radius-xl: 1rem;
   --radius-full: 9999px;
   
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 20px rgba(79, 124, 172, 0.3);
+  /* Shadows & Glows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px rgba(44, 212, 138, 0.4);
+  --shadow-glow-strong: 0 0 30px rgba(44, 212, 138, 0.6);
+  --shadow-neon: 0 0 10px rgba(134, 255, 218, 0.5), 0 0 20px rgba(44, 212, 138, 0.3);
   
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -74,8 +79,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--color-bg);
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
+  background-attachment: fixed;
   color: var(--color-text-primary);
+  line-height: 1.6;
 }
 
 #root {
@@ -160,20 +167,30 @@ input:focus, textarea:focus {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2.5rem;
+  }
 }
 
 .card {
   background: var(--color-bg-card);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-base);
   border: 1px solid var(--color-border);
+  position: relative;
+  margin: 1.5rem 0;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 20px var(--color-glow);
+  border-color: rgba(44, 212, 138, 0.2);
+  transform: translateY(-2px);
 }
 
 .fade-in {
@@ -202,10 +219,32 @@ input:focus, textarea:focus {
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(79, 124, 172, 0.3);
+    box-shadow: 0 0 10px rgba(44, 212, 138, 0.4);
   }
   50% {
-    box-shadow: 0 0 20px rgba(79, 124, 172, 0.6);
+    box-shadow: 0 0 25px rgba(44, 212, 138, 0.7);
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(44, 212, 138, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(44, 212, 138, 0.6);
+  }
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    border-color: rgba(44, 212, 138, 0.5);
+    box-shadow: 0 0 5px rgba(44, 212, 138, 0.3);
+  }
+  50% {
+    border-color: rgba(134, 255, 218, 0.8);
+    box-shadow: 0 0 15px rgba(134, 255, 218, 0.5);
   }
 }
 

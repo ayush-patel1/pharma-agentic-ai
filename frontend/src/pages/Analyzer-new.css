@@ -8,11 +8,11 @@
 .header {
   text-align: center;
   color: var(--color-text-primary);
-  margin-bottom: 1.5rem;
-  padding: 1.5rem 1rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
   background: var(--color-bg-card);
   backdrop-filter: blur(8px);
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: var(--shadow-lg), 0 0 30px rgba(44, 212, 138, 0.15);
   border: 1px solid rgba(44, 212, 138, 0.2);
 }
@@ -36,11 +36,9 @@
 .container {
   background: var(--color-bg-card);
   border-radius: 12px;
-  padding: 1.25rem;
+  padding: 1.5rem;
   box-shadow: var(--shadow-md), 0 0 20px rgba(0, 0, 0, 0.5);
   border: 1px solid var(--color-border);
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 /* Form Inputs */
@@ -172,15 +170,15 @@
 
 .cards { 
   display:grid;
-  gap:0.875rem;
-  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  gap:1rem;
+  grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
 }
 
 .card { 
   background: var(--color-bg-card);
-  padding:0.875rem;
+  padding:1rem;
   border-radius:10px;
-  border-left:3px solid var(--color-primary);
+  border-left:4px solid var(--color-primary);
   transition:all 0.18s;
   border: 1px solid var(--color-border);
 }
@@ -194,12 +192,12 @@
 .card h4 { 
   color: var(--color-text-primary);
   margin-bottom:0.5rem;
-  font-size:0.975rem;
+  font-size:1.05rem;
 }
 
 .paper-card .abstract { 
   color: var(--color-text-secondary);
-  font-size:0.875rem;
+  font-size:0.95rem;
   line-height:1.5;
   margin-bottom:0.5rem;
   display:-webkit-box;
@@ -235,15 +233,13 @@
 /* Report Box - Dark Clinical Theme */
 .report-box { 
   background: var(--color-bg-card);
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   color: var(--color-text-primary);
-  line-height: 1.7;
+  line-height: 1.8;
   box-shadow: var(--shadow-lg), 0 0 30px rgba(44, 212, 138, 0.15);
   border: 1px solid rgba(44, 212, 138, 0.2);
   font-family: var(--font-primary);
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .report-box .report-header {
@@ -364,8 +360,8 @@
 
 .workflow-section { 
   background: var(--color-bg-card);
-  padding:0.875rem;
-  border-radius:10px;
+  padding:1rem;
+  border-radius:12px;
   border:1px solid rgba(44, 212, 138, 0.2);
   box-shadow: var(--shadow-sm), 0 0 15px rgba(44, 212, 138, 0.1);
 }
@@ -405,8 +401,8 @@
 .agent-step { 
   display:flex;
   align-items:center;
-  gap:0.625rem;
-  padding:0.75rem;
+  gap:0.75rem;
+  padding:0.8rem;
   border-radius:8px;
   background: var(--color-bg-card);
   border:1px solid var(--color-border);
@@ -432,18 +428,16 @@
 }
 
 .agent-icon { 
-  width:38px;
-  height:38px;
+  width:44px;
+  height:44px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   color: var(--color-bg);
   font-weight:bold;
-  font-size:0.9rem;
   background: var(--color-primary);
   box-shadow: 0 0 15px rgba(44, 212, 138, 0.5);
-  flex-shrink: 0;
 }
 
 .agent-step.completed .agent-icon { 
@@ -554,8 +548,8 @@
 /* Terminal-Style Logs Section */
 .logs-section { 
   background: var(--color-bg-card);
-  padding:0.875rem;
-  border-radius:10px;
+  padding:1rem;
+  border-radius:12px;
   border:1px solid rgba(44, 212, 138, 0.2);
   box-shadow: var(--shadow-sm), 0 0 15px rgba(44, 212, 138, 0.1);
 }
@@ -569,13 +563,13 @@
 .logs-container { 
   background: #0A0D13;
   color: var(--color-primary);
-  padding:0.75rem;
+  padding:1rem;
   border-radius:8px;
   font-family: var(--font-mono);
-  font-size:0.8125rem;
-  max-height:420px;
+  font-size:0.85rem;
+  max-height:500px;
   overflow-y:auto;
-  line-height:1.55;
+  line-height:1.6;
   border: 1px solid rgba(44, 212, 138, 0.3);
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
   position: relative;
@@ -661,22 +655,8 @@
 
 /* Responsive Design */
 @media (max-width:768px) {
-  .app {
-    padding: 0 0.75rem;
-  }
-  .header {
-    padding: 1rem 0.75rem;
-    margin-bottom: 1rem;
-  }
-  .header h1 {
-    font-size: 1.75rem;
-  }
-  .container {
-    padding: 1rem;
-  }
   .workflow-logs-container { 
     grid-template-columns: 1fr;
-    gap: 0.875rem;
   }
   .input-form { 
     flex-direction:column;
@@ -684,40 +664,5 @@
   }
   .cards { 
     grid-template-columns: 1fr;
-    gap: 0.75rem;
   }
-  .card {
-    padding: 0.75rem;
-  }
-  .report-box {
-    padding: 1rem;
-  }
-  .agent-pipeline {
-    max-width: 100%;
-  }
-}
-
-/* Additional fixes for arrows and layout */
-.arrow-down {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--color-text-muted);
-  font-size: 12px;
-  background: var(--color-bg-card);
-  padding: 2px 4px;
-  line-height: 1;
-  border-radius: 4px;
-}
-
-.flow-arrow {
-  color: var(--color-text-muted);
-  font-size: 1.2rem;
-  align-self: center;
-  opacity: 0.7;
-}
-
-.architecture-diagram {
-  margin-bottom: 1.5rem;
 }

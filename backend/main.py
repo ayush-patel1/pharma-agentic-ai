@@ -17,9 +17,9 @@ app.add_middleware(
         "http://localhost:5173", 
         "http://0.0.0.0:3000", 
         "http://127.0.0.1:3000",
-        "https://*.netlify.app",
         "https://pharma-agentic-ai-zsgc.onrender.com"
     ],
+    allow_origin_regex=r"https://.*\.netlify\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

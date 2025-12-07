@@ -1,0 +1,326 @@
+.about-page {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.about-hero {
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(135deg, 
+    rgba(79, 124, 172, 0.1) 0%, 
+    rgba(156, 136, 255, 0.1) 100%);
+  text-align: center;
+}
+
+.page-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  margin-bottom: var(--spacing-lg);
+}
+
+.page-subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  color: var(--color-text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Overview Section */
+.overview-section {
+  padding: var(--spacing-3xl) 0;
+  background: white;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--spacing-3xl);
+  align-items: start;
+}
+
+.content-text h2 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.content-text p {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.0625rem;
+}
+
+.content-text ul {
+  list-style: none;
+  padding: 0;
+}
+
+.content-text li {
+  padding: var(--spacing-md) 0;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.content-text li:last-child {
+  border-bottom: none;
+}
+
+.content-text strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.content-visual {
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.stat-box {
+  text-align: center;
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, 
+    rgba(79, 124, 172, 0.05) 0%, 
+    rgba(156, 136, 255, 0.05) 100%);
+  border-radius: var(--radius-md);
+}
+
+.stat-big {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* Architecture Section */
+.architecture-section {
+  padding: var(--spacing-3xl) 0;
+}
+
+.architecture-diagram {
+  padding: var(--spacing-3xl);
+  background: white;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.arch-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.arch-node {
+  text-align: center;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  min-width: 250px;
+}
+
+.user-node {
+  background: linear-gradient(135deg, rgba(79, 124, 172, 0.1), rgba(119, 166, 182, 0.1));
+}
+
+.api-node {
+  background: linear-gradient(135deg, rgba(119, 166, 182, 0.1), rgba(156, 136, 255, 0.1));
+}
+
+.output-node {
+  background: linear-gradient(135deg, rgba(156, 136, 255, 0.1), rgba(79, 124, 172, 0.1));
+}
+
+.node-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.node-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.node-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+}
+
+.arch-arrow {
+  font-size: 2rem;
+  color: var(--color-primary);
+  font-weight: 300;
+}
+
+.arch-agents {
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, 
+    rgba(79, 124, 172, 0.05) 0%, 
+    rgba(156, 136, 255, 0.05) 100%);
+  border-radius: var(--radius-lg);
+  width: 100%;
+}
+
+.agent-box {
+  padding: var(--spacing-lg);
+  background: white;
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--color-border);
+}
+
+.master-agent {
+  margin-bottom: var(--spacing-xl);
+  border-color: var(--color-primary);
+}
+
+.agent-connections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+.agent-icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.agent-name {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.agent-role {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Technology Section */
+.technology-section {
+  padding: var(--spacing-3xl) 0;
+  background: white;
+}
+
+.tech-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.tech-detail-card {
+  padding: var(--spacing-2xl);
+  text-align: center;
+  transition: transform var(--transition-base);
+}
+
+.tech-detail-card:hover {
+  transform: translateY(-5px);
+}
+
+.tech-card-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.tech-detail-card h3 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.tech-detail-card p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Use Cases Section */
+.use-cases-section {
+  padding: var(--spacing-3xl) 0;
+}
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.use-case-card {
+  padding: var(--spacing-2xl);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.use-case-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.use-case-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.use-case-card h3 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.125rem;
+}
+
+.use-case-card p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Section */
+.about-cta-section {
+  padding: var(--spacing-3xl) 0;
+  background: white;
+}
+
+.cta-box {
+  text-align: center;
+  padding: var(--spacing-3xl);
+  background: linear-gradient(135deg, 
+    rgba(79, 124, 172, 0.05) 0%, 
+    rgba(156, 136, 255, 0.05) 100%);
+}
+
+.cta-box h2 {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+}
+
+.cta-box p {
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .agent-connections {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tech-details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+  }
+}

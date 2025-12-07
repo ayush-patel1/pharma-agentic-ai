@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import './App.css'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_URL || '/api'
 
 function AgentStepIcon({ status }) {
   if (status === 'completed') return '✓'
@@ -346,8 +346,21 @@ export default function App() {
                   {result.summaries.map((s, i) => (
                     <div key={i} className="card summary-card">
                       <h4>{s.title}</h4>
-                      <div className="summary-content">
-                        {s.summary_raw.split('\n').map((ln, idx) => ln.trim() ? <p key={idx}>{ln}</p> : null)}
+                      <div className="summary-content" style={{ lineHeight: '1.6' }}>
+                        {s.summary_raw.split('\n').map((line, idx) => {
+                          const trimmed = line.trim()
+                          if (!trimmed) return null
+                          
+                          // Handle bullet points with * or -
+                          if (trimmed.startsWith('*') || trimmed.startsWith('-')) {
+                            return <li key={idx} style={{ marginLeft: '1.5rem', marginBottom: '0.5rem' }}>{trimmed.substring(1).trim()}</li>
+                          }
+                          
+                          // Handle bold text with **text**
+                          const boldFormatted = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                          
+                          return <p key={idx} dangerouslySetInnerHTML={{ __html: boldFormatted }} style={{ marginBottom: '0.5rem' }} />
+                        })}
                       </div>
                     </div>
                   ))}

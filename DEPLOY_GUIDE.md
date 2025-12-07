@@ -1,107 +1,114 @@
 # Deployment Guide
 
-## Problem with Current Vercel Setup
+## Current Deployment Architecture
 
-Vercel serverless functions have limitations:
+**Frontend**: Netlify  
+**Backend**: Render  
+**API**: Google Gemini AI
+
+This setup separates concerns and uses platforms optimized for their respective workloads.
+
+## Why Separate Deployments?
+
+Serverless functions (like Vercel) have limitations:
 - 250MB max size limit
 - 10 second cold start timeout
 - Not ideal for heavy AI/ML workloads
 
 Your backend uses LangGraph, LangChain, and Gemini API which creates a large bundle that exceeds these limits.
 
-## Recommended Approach: Separate Deployments
+## Deployment Setup
 
-### Option 1: Frontend on Vercel + Backend on Render (Recommended)
-
-#### Step 1: Deploy Backend on Render
+### Step 1: Deploy Backend on Render
 
 1. Go to [Render.com](https://render.com) and sign up
 2. Click "New +" → "Web Service"
-3. Connect your GitHub repository
+3. Connect your GitHub repository: `ayushdev2/pharma-agentic-ai`
 4. Configure:
-   - **Name**: `pharma-agentic-backend`
+   - **Name**: `pharma-agentic-ai`
    - **Root Directory**: leave empty
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
-   - **Plan**: Free tier (for testing)
+   - **Plan**: Free tier
 
-5. Click "Create Web Service"
-6. Copy your backend URL (e.g., `https://pharma-agentic-backend.onrender.com`)
+5. Add Environment Variable:
+   - **Key**: `GEMINI_API_KEY`
+   - **Value**: Your Gemini API key
 
-#### Step 2: Update Frontend Environment Variable
+6. Click "Create Web Service"
+7. Your backend URL: `https://pharma-agentic-ai-zsgc.onrender.com`
 
-1. In your local project, update `frontend/.env.production`:
-   ```
-   VITE_API_URL=https://pharma-agentic-backend.onrender.com
-   ```
+### Step 2: Deploy Frontend on Netlify
 
-2. Commit and push:
-   ```bash
-   git add frontend/.env.production
-   git commit -m "Update API URL for production"
-   git push
-   ```
+1. Go to [Netlify.com](https://app.netlify.com) and sign up/login
+2. Click "Add new site" → "Import an existing project"
+3. Choose "Deploy with GitHub"
+4. Select repository: `ayushdev2/pharma-agentic-ai`
+5. Configure build settings (auto-detected from `netlify.toml`):
+   - **Base directory**: `frontend`
+   - **Build command**: `npm install && npm run build`
+   - **Publish directory**: `frontend/dist`
 
-#### Step 3: Deploy Frontend on Vercel
+6. Add Environment Variable:
+   - Click "Add environment variables"
+   - **Key**: `VITE_API_URL`
+   - **Value**: `https://pharma-agentic-ai-zsgc.onrender.com`
 
-1. Go to [Vercel.com](https://vercel.com)
-2. Import your GitHub repository
-3. Configure:
-   - **Framework Preset**: Vite
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+7. Click "Deploy site"
 
-4. Click "Deploy"
+### Step 3: Verify Deployment
 
-#### Step 4: Update CORS in Backend
+1. Wait for both deployments to complete
+2. Visit your Netlify URL
+3. Test the drug repurposing analysis feature
+4. Check that the backend connection works
 
-1. Once frontend is deployed, add your Vercel URL to CORS in `backend/main.py`:
-   ```python
-   allow_origins=[
-       "http://localhost:3000",
-       "https://your-frontend.vercel.app",  # Add your Vercel URL
-       "https://pharma-agentic-backend.onrender.com"
-   ]
-   ```
+**Note**: The `netlify.toml` file is already configured with:
+- Build settings
+- SPA routing redirects
+- Node version
 
-2. Commit and push - Render will auto-redeploy
+### Troubleshooting
 
-### Option 2: Everything on Railway
+**Backend not responding?**
+- Check Render logs for errors
+- Verify `GEMINI_API_KEY` is set in Render environment variables
+- Ensure backend is not sleeping (free tier sleeps after 15 min inactivity)
 
-Railway has better support for Python apps with heavy dependencies.
+**Frontend can't connect to backend?**
+- Verify `VITE_API_URL` is set correctly in Netlify
+- Check browser console for CORS errors
+- Backend CORS is configured to allow `*.netlify.app` domains
 
-1. Go to [Railway.app](https://railway.app)
-2. "New Project" → Connect GitHub repo
-3. Railway will auto-detect both services
-4. Configure frontend to use backend URL
-5. Deploy
+**API quota exceeded?**
+- Check your Gemini API usage at https://ai.dev/usage
+- Free tier has rate limits - wait or upgrade plan
 
-### Option 3: Backend on Python Anywhere + Frontend on Vercel
+## Current Deployment Status
 
-Python Anywhere is designed for Python applications and has no cold start issues.
+✅ **Backend**: Deployed on Render at `https://pharma-agentic-ai-zsgc.onrender.com`  
+✅ **Frontend**: Ready to deploy on Netlify  
+✅ **Local Development**: Working perfectly  
 
-## Current Status
+## Why This Stack?
 
-- ❌ Vercel (frontend + backend combined) - **Not working** due to serverless limitations
-- ✅ Local development - **Working perfectly**
-- ⏳ Awaiting decision on deployment platform
+**Netlify for Frontend:**
+- ✅ Optimized for static sites and SPAs
+- ✅ Instant builds and deploys
+- ✅ Free tier with generous limits
+- ✅ Auto SSL and CDN
+- ✅ GitHub integration
 
-## Quick Fix (If You Must Use Vercel)
-
-If you absolutely must use Vercel, you'll need to:
-1. Drastically reduce dependencies
-2. Remove LangGraph and use direct API calls
-3. Simplify the agent workflow
-
-But this defeats the purpose of your sophisticated multi-agent system.
-
-## Recommendation
-
-**Use Render (free tier) for backend + Vercel for frontend.** This gives you:
+**Render for Backend:**
 - ✅ No cold start issues
-- ✅ Support for heavy dependencies  
+- ✅ Support for heavy dependencies (LangGraph, LangChain)
 - ✅ Free tier available
-- ✅ Automatic GitHub deployments
-- ✅ Professional setup
+- ✅ Automatic deployments from GitHub
+- ✅ Persistent services (not serverless)
+
+## Alternative Options
+
+**Railway** - Good for full-stack deployments, auto-detects services  
+**Python Anywhere** - Specialized for Python apps, no cold starts  
+**Fly.io** - Good for containerized deployments

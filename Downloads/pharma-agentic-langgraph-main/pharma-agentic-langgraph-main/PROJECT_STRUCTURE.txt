@@ -1,0 +1,148 @@
+pharma-agentic-langgraph/
+│
+├── 📄 Configuration & Documentation
+│   ├── .env.example              # Environment variables template
+│   ├── .gitignore               # Git ignore rules
+│   ├── requirements.txt         # Python dependencies
+│   ├── README.md                # Main project documentation
+│   ├── ARCHITECTURE.md          # System architecture diagrams
+│   ├── QUICKSTART.md            # Quick start guide
+│   └── PROJECT_SUMMARY.md       # Project completion summary
+│
+├── 🚀 Setup & Run Scripts
+│   ├── setup.sh                 # Automated project setup
+│   ├── verify.sh                # Project verification
+│   ├── run_backend.sh           # Start backend server
+│   └── run_frontend.sh          # Start frontend server
+│
+├── 🐍 Backend (Python/FastAPI/LangGraph)
+│   └── backend/
+│       ├── __init__.py          # Python package init
+│       ├── main.py              # FastAPI application entry point
+│       │                        # └─→ REST API with /run endpoint
+│       ├── graph.py             # LangGraph workflow definition
+│       │                        # └─→ 4 agents: master, search, summarizer, reporter
+│       ├── tools.py             # Agent tools
+│       │                        # ├─→ search_mock_papers()
+│       │                        # └─→ summarize_paper() with Gemini
+│       └── models.py            # Pydantic models
+│                                # ├─→ GraphState (shared state)
+│                                # ├─→ QueryInput (API request)
+│                                # └─→ QueryOutput (API response)
+│
+├── 📊 Data
+│   └── data/
+│       └── mock_papers.json     # 10 curated research papers
+│                                # └─→ Metformin, Alzheimer's, etc.
+│
+├── ⚛️ Frontend (React/Vite)
+│   └── frontend/
+│       ├── index.html           # HTML entry point
+│       ├── package.json         # Node.js dependencies
+│       ├── vite.config.js       # Vite configuration
+│       └── src/
+│           ├── main.jsx         # React entry point
+│           ├── App.jsx          # Main UI component
+│           │                    # ├─→ Form (drug + disease inputs)
+│           │                    # ├─→ Cards (papers display)
+│           │                    # ├─→ Cards (summaries display)
+│           │                    # └─→ Report (final analysis)
+│           ├── App.css          # Component styling
+│           │                    # └─→ Purple gradient theme
+│           └── index.css        # Global styles
+│
+└── 🔧 Virtual Environment (created after setup)
+    └── venv/                    # Python virtual environment
+
+════════════════════════════════════════════════════════════════
+
+📦 TOTAL FILES CREATED: 21 files
+
+Backend Files:      5 files (Python/FastAPI/LangGraph)
+Frontend Files:     7 files (React/Vite/CSS)
+Data Files:         1 file  (JSON dataset)
+Documentation:      5 files (Markdown guides)
+Scripts:            4 files (Bash automation)
+Config:             3 files (.gitignore, .env.example, requirements.txt)
+
+════════════════════════════════════════════════════════════════
+
+🎯 AGENT ARCHITECTURE:
+
+User Input
+    ↓
+[FastAPI /run endpoint]
+    ↓
+┌─────────────────────────────────────┐
+│       LangGraph Workflow            │
+│                                     │
+│  ┌──────────────────┐              │
+│  │  Master Agent    │  Plans tasks │
+│  └────────┬─────────┘              │
+│           ↓                         │
+│  ┌──────────────────┐              │
+│  │  Search Agent    │  Finds 5     │
+│  │                  │  papers      │
+│  └────────┬─────────┘              │
+│           ↓                         │
+│  ┌──────────────────┐              │
+│  │ Summarizer Agent │  AI analyzes │
+│  │                  │  each paper  │
+│  └────────┬─────────┘              │
+│           ↓                         │
+│  ┌──────────────────┐              │
+│  │  Reporter Agent  │  Generates   │
+│  │                  │  final report│
+│  └──────────────────┘              │
+└─────────────────────────────────────┘
+    ↓
+JSON Response
+    ↓
+React UI Display
+
+════════════════════════════════════════════════════════════════
+
+🔑 KEY TECHNOLOGIES:
+
+Backend:
+  • Python 3.9+
+  • FastAPI (REST API)
+  • LangGraph (Agent orchestration)
+  • LangChain (LLM framework)
+  • Google Gemini gemini-pro (Summarization)
+  • Pydantic (Data validation)
+  • Uvicorn (ASGI server)
+
+Frontend:
+  • React 18
+  • Vite (Build tool)
+  • Modern CSS3
+  • Fetch API
+
+Data:
+  • JSON mock dataset
+  • 10 curated papers
+
+════════════════════════════════════════════════════════════════
+
+⚡ QUICK START:
+
+1. Set API key:
+   export GEMINI_API_KEY='your-gemini-key'
+
+2. Run setup:
+   ./setup.sh
+
+3. Start backend:
+   ./run_backend.sh
+
+4. Start frontend:
+   ./run_frontend.sh
+
+5. Open browser:
+   http://localhost:3000
+
+════════════════════════════════════════════════════════════════
+
+✨ PROJECT STATUS: ✅ COMPLETE & READY FOR HACKATHON!
+

@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+*.pyo
+venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing & Backup
+*.backup
+*.broken
+test-*.html
+nohup.out
+
+# Node
+node_modules/
+dist/
+build/
+.cache/
+
+# Build artifacts
+*.egg
+*.whl

@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Metformin and cognitive function in Alzheimer's disease: A systematic review",
+    "abstract": "Background: Metformin, a widely prescribed anti-diabetic drug, has shown neuroprotective properties in preclinical studies. This systematic review examines the evidence for metformin's effects on cognitive function in Alzheimer's disease patients. Methods: We analyzed 12 clinical studies involving 3,456 participants. Results: Metformin treatment was associated with improved cognitive scores (MMSE +2.3 points, p<0.05) and reduced amyloid-beta accumulation in brain imaging studies. The drug demonstrated anti-inflammatory effects and improved mitochondrial function in neuronal cells. Conclusions: Metformin shows promise as a potential therapeutic agent for Alzheimer's disease, warranting further investigation in larger randomized controlled trials.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example1"
+  },
+  {
+    "title": "Neuroprotective effects of metformin in neurodegenerative diseases",
+    "abstract": "Metformin activates AMP-activated protein kinase (AMPK), which plays a crucial role in cellular energy homeostasis and autophagy. In Alzheimer's disease models, metformin reduced tau phosphorylation and improved synaptic plasticity. Our in vivo studies in APP/PS1 mice showed that 6-month metformin treatment (200mg/kg/day) significantly reduced amyloid plaque burden by 35% and improved spatial memory performance in Morris water maze tests. Additionally, metformin enhanced microglial clearance of amyloid-beta oligomers and reduced neuroinflammation markers including IL-1β and TNF-α by 40-50%.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example2"
+  },
+  {
+    "title": "Metformin reduces amyloid-beta levels in the brain through multiple mechanisms",
+    "abstract": "This study investigated the molecular mechanisms underlying metformin's anti-amyloid effects. We found that metformin (1) increases neprilysin expression, enhancing amyloid-beta degradation, (2) activates autophagy pathways to clear toxic protein aggregates, and (3) reduces APP processing through BACE1 inhibition. In vitro studies using human neuronal cells showed 60% reduction in amyloid-beta42 secretion. These findings suggest metformin's multi-target approach could be advantageous for Alzheimer's therapy compared to single-target drugs that have failed in clinical trials.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example3"
+  },
+  {
+    "title": "Clinical outcomes of metformin use in diabetic patients with Alzheimer's disease",
+    "abstract": "A retrospective cohort study of 1,823 diabetic patients showed that those taking metformin had 30% lower incidence of Alzheimer's diagnosis over 10-year follow-up compared to other anti-diabetic medications. Metformin users showed slower cognitive decline (CDR progression 0.3 vs 0.5 per year, p<0.01) and better preservation of hippocampal volume on MRI (-2.1% vs -4.8% annually). However, the study noted potential confounding factors including overall better metabolic control in metformin users. Prospective trials are needed to establish causality.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example4"
+  },
+  {
+    "title": "Metformin's impact on brain glucose metabolism and insulin sensitivity in Alzheimer's disease",
+    "abstract": "Alzheimer's disease is increasingly recognized as 'type 3 diabetes' due to brain insulin resistance. This PET imaging study (n=78) demonstrated that metformin treatment for 12 months improved cerebral glucose metabolism in AD patients, particularly in the posterior cingulate cortex and precuneus regions typically affected early in disease progression. Metformin normalized brain insulin signaling pathways and reduced oxidative stress markers. These metabolic improvements correlated with stabilization of cognitive function (ADAS-Cog scores remained stable vs. +5.2 point decline in controls).",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example5"
+  },
+  {
+    "title": "Aspirin and cardiovascular risk reduction: Meta-analysis",
+    "abstract": "Aspirin has been the cornerstone of cardiovascular disease prevention for decades. This meta-analysis of 45 trials involving 120,000 participants confirms aspirin's efficacy in reducing myocardial infarction risk by 23% and ischemic stroke by 15%. Daily low-dose aspirin (75-100mg) provides optimal benefit-risk ratio for secondary prevention in patients with established cardiovascular disease.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example6"
+  },
+  {
+    "title": "Statin therapy in Alzheimer's disease: A double-edged sword",
+    "abstract": "While statins lower cholesterol and reduce cardiovascular risk, their role in Alzheimer's disease remains controversial. Some epidemiological studies suggest statins may reduce AD risk by 30-40%, potentially through anti-inflammatory and vascular protective mechanisms. However, randomized trials have yielded mixed results, with concerns about potential cognitive side effects in some patients. Brain cholesterol metabolism differs from peripheral cholesterol, and lipophilic statins that cross the blood-brain barrier may have different effects than hydrophilic statins.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example7"
+  },
+  {
+    "title": "Rapamycin promotes autophagy and extends lifespan in animal models",
+    "abstract": "Rapamycin, an mTOR inhibitor, has shown remarkable effects on longevity and age-related diseases in model organisms. In Alzheimer's disease models, rapamycin treatment enhanced autophagy-mediated clearance of protein aggregates including amyloid-beta and phosphorylated tau. Studies in APP/PS1 mice showed improved cognitive function and reduced neurodegeneration. Clinical translation is limited by immunosuppressive effects, but intermittent dosing schedules or rapamycin analogs (rapalogs) may offer therapeutic benefits with reduced side effects.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example8"
+  },
+  {
+    "title": "Anti-inflammatory drugs and Alzheimer's disease: Lessons from epidemiology",
+    "abstract": "Chronic neuroinflammation is a key feature of Alzheimer's pathology. Long-term epidemiological studies indicate that sustained use of non-steroidal anti-inflammatory drugs (NSAIDs) may reduce AD risk by 40-50%. However, clinical trials of NSAIDs in established AD patients have been disappointing, suggesting a 'window of opportunity' early in disease. Selective targeting of inflammatory pathways while preserving beneficial immune responses may be more effective than broad immunosuppression.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example9"
+  },
+  {
+    "title": "Metformin modulates gut microbiome composition with implications for neurodegeneration",
+    "abstract": "Recent evidence highlights the gut-brain axis in Alzheimer's disease. This study found that metformin treatment significantly altered gut microbiome composition, increasing beneficial bacteria like Akkermansia muciniphila and Lactobacillus species while reducing pro-inflammatory bacteria. These changes correlated with reduced systemic inflammation (CRP levels decreased 35%) and improved intestinal barrier function. Metabolomic analysis revealed increased short-chain fatty acid production, particularly butyrate, which has neuroprotective properties. These findings suggest metformin's benefits in AD may partly operate through gut microbiome modulation.",
+    "link": "https://pubmed.ncbi.nlm.nih.gov/example10"
+  }
+]

@@ -35,7 +35,7 @@ export default function Navbar() {
             Analyzer
           </Link>
           <a 
-            href="https://github.com/ayushdev2/pharma-agentic-ai" 
+            href="https://github.com/ayush-patel1/pharma-agentic-ai" 
             target="_blank" 
             rel="noopener noreferrer"
             className="nav-link"

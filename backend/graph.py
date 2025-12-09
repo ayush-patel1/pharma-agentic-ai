@@ -1,6 +1,6 @@
 from langgraph.graph import StateGraph, END
 from backend.models import GraphState
-from backend.tools import search_mock_papers, summarize_paper
+from backend.tools import search_mock_papers, summarize_papers_batch
 import google.generativeai as genai
 import os
 
@@ -48,7 +48,8 @@ def search_agent(state: GraphState) -> GraphState:
 
 def summarizer_agent(state: GraphState) -> GraphState:
     """
-    Summarizer agent that uses LLM to summarize each paper.
+    Summarizer agent that uses a single LLM call to summarize all papers at once.
+    This avoids rate limits by batching all papers into one API request.
     
     Args:
         state: Current graph state
@@ -58,13 +59,12 @@ def summarizer_agent(state: GraphState) -> GraphState:
     """
     drug = state["drug"]
     disease = state["disease"]
-    summaries = []
-    print(f"[SUMMARIZER AGENT] Summarizing {len(state.get('papers', []))} papers")
+    papers = state.get("papers", [])
     
-    for i, p in enumerate(state.get("papers", []), 1):
-        print(f"[SUMMARIZER AGENT] Processing paper {i}/{len(state.get('papers', []))}: {p['title'][:50]}...")
-        summary = summarize_paper(drug, disease, p)
-        summaries.append(summary)
+    print(f"[SUMMARIZER AGENT] Summarizing {len(papers)} papers in a single API call")
+    
+    # Use batch summarization (single API call for all papers)
+    summaries = summarize_papers_batch(drug, disease, papers)
     
     state["summaries"] = summaries
     print(f"[SUMMARIZER AGENT] Completed {len(summaries)} summaries")

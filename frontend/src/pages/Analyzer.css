@@ -1432,6 +1432,162 @@
   }
 }
 
+/* Regulatory Checklist Panel */
+.regulatory-pathway-panel {
+  padding: 2.25rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.regulatory-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.checklist-item {
+  display: flex;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--color-border);
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  align-items: flex-start;
+  transition: all var(--transition-fast);
+}
+
+.checklist-item:hover {
+  background: rgba(16, 185, 129, 0.02);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.check-bullet {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary-light);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.checklist-details h5 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--color-text-primary);
+}
+
+.checklist-details p {
+  font-size: 0.825rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Biological Target Affinity Map */
+.target-affinity-panel {
+  padding: 2.25rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.pathway-diagram-container {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pathway-svg {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+}
+
+/* Flow Line Animation */
+.pathway-line {
+  fill: none;
+  stroke-width: 2;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-dasharray: 6, 6;
+  animation: dashFlow 20s linear infinite;
+}
+
+.pathway-line.line-1, .pathway-line.line-2 {
+  stroke: var(--color-primary);
+}
+
+.pathway-line.line-3, .pathway-line.line-4 {
+  stroke: var(--color-accent);
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -360px;
+  }
+}
+
+.node-circle {
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.05));
+}
+
+.node-circle.teal {
+  fill: #064e3b;
+  stroke: var(--color-primary-light);
+}
+
+.node-circle.violet {
+  fill: #4c1d95;
+  stroke: var(--color-accent);
+}
+
+.node-rect {
+  fill: #0f172a;
+  stroke: var(--color-border);
+  stroke-width: 1.5;
+}
+
+.node-text {
+  font-size: 0.85rem;
+  fill: var(--color-text-primary);
+  font-family: var(--font-primary);
+}
+
+.node-text-sm {
+  font-size: 0.775rem;
+  font-weight: 600;
+  fill: var(--color-text-primary);
+  font-family: var(--font-primary);
+}
+
+.node-text-meta {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  fill: var(--color-secondary);
+}
+
+.scorecard-badge.green {
+  color: var(--color-primary-light);
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.scorecard-badge.blue {
+  color: var(--color-secondary);
+  background: rgba(6, 182, 212, 0.08);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
 .paper-card-footer {
   display: flex;
   justify-content: space-between;

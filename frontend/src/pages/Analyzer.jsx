@@ -17,6 +17,11 @@ export default function Analyzer() {
   const [pdfFile, setPdfFile] = useState(null)
   const [dragActive, setDragActive] = useState(false)
 
+  // Interactive Guided Tour States
+  const [tourActive, setTourActive] = useState(false)
+  const [tourStep, setTourStep] = useState(0)
+  const [highlightStyle, setHighlightStyle] = useState({ display: 'none' })
+
   const [agentSteps, setAgentSteps] = useState([])
   const [currentAgent, setCurrentAgent] = useState(null)
   const [logs, setLogs] = useState([])
@@ -42,6 +47,95 @@ export default function Analyzer() {
     { key: 'summarize', agent: 'Summarizer Agent', description: 'Extracting study findings via LLM', duration: 3000 },
     { key: 'report', agent: 'Report Agent', description: 'Compiling structured monograph', duration: 1400 }
   ]
+
+  const tourSteps = [
+    {
+      title: "Welcome to NeuroRepurpose AI 🧬",
+      content: "Let's take a quick 1-minute guided tour of your Research Workbench to learn how to run drug repurposing simulations."
+    },
+    {
+      title: "1. Select Research Source 🔬",
+      content: "Toggle between 'Literature Database Search' to mine global registries, or 'Analyze Uploaded PDF' to analyze local scientific files."
+    },
+    {
+      title: "2. Input Targets & Parameters 💊",
+      content: "Enter your drug compound and target indication. If analyzing a PDF, these are optional—our AI will auto-detect the drug and disease details from the document text."
+    },
+    {
+      title: "3. Cooperative Agent Flow 🤖",
+      content: "Watch clinical agents (Master, Search, Summarizer, and Report) collaborate and coordinate steps in real-time as the analysis runs."
+    },
+    {
+      title: "4. Audit Log Terminal 🖥️",
+      content: "Monitor live logs directly from the backend model gateways. Every step is logged, ensuring complete traceability and auditability."
+    },
+    {
+      title: "5. Clinical Scorecard 📊",
+      content: "Review calculated indexes (Synergy Score, Safety Match, and Evidence Level) alongside estimated preclinical timeline savings."
+    },
+    {
+      title: "6. Biological Pathway Map 🧬",
+      content: "View receptor bindings (Kd affinity indexes) and cellular mechanisms of action illustrated in an animated target map."
+    },
+    {
+      title: "7. Monograph & Protocol Sheets 📄",
+      content: "Read the publication-ready scientific monograph, complete with a recommended Phase IIa exploratory clinical protocol card, and export it to PDF."
+    }
+  ]
+
+  // Automatically start tour on first visit
+  useEffect(() => {
+    const completed = localStorage.getItem('tour_completed')
+    if (!completed) {
+      setTimeout(() => {
+        startTour()
+      }, 1000)
+    }
+  }, [])
+
+  // Highlight tour targets dynamically
+  useEffect(() => {
+    if (!tourActive) {
+      setHighlightStyle({ display: 'none' })
+      return
+    }
+
+    const selectors = [
+      null, // Welcome (centered)
+      '.analysis-mode-selector',
+      '.premium-form',
+      '.agent-card-panel',
+      '.terminal-card-panel',
+      '.synergy-scorecard-panel',
+      '.target-affinity-panel',
+      '.report-publication-section'
+    ]
+
+    const sel = selectors[tourStep]
+    if (!sel) {
+      setHighlightStyle({ display: 'none' })
+      return
+    }
+
+    const t = setTimeout(() => {
+      const el = document.querySelector(sel)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        const rect = el.getBoundingClientRect()
+        setHighlightStyle({
+          display: 'block',
+          top: `${rect.top + window.scrollY - 8}px`,
+          left: `${rect.left + window.scrollX - 8}px`,
+          width: `${rect.width + 16}px`,
+          height: `${rect.height + 16}px`
+        })
+      } else {
+        setHighlightStyle({ display: 'none' })
+      }
+    }, 100)
+
+    return () => clearTimeout(t)
+  }, [tourActive, tourStep, result])
 
   useEffect(() => {
     return () => clearAllTimeouts()
@@ -102,7 +196,7 @@ export default function Analyzer() {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
       setPdfFile(file)
-      addLog(`File queued: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`, 'info')
+      addLog(`File queued: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`, 'info')
     }
   }
 
@@ -110,6 +204,48 @@ export default function Analyzer() {
     e?.stopPropagation()
     setPdfFile(null)
     addLog(`File removed from queue`, 'info')
+  }
+
+  // Guided Tour Launch
+  const startTour = () => {
+    if (!result) {
+      setResult({
+        drug: 'Metformin',
+        disease: "Alzheimer's",
+        final_report: `
+          <div class="report-header">
+            <h4>PROPRIETARY CLINICAL EVALUATION</h4>
+            <h2>Therapeutic Repositioning Assessment: Metformin for Indication in Alzheimer's Disease</h2>
+          </div>
+          <p>This automated monograph summarizes clinical insights synthesized from scientific repositories. Safety profiles, target bindings, and recommended investigation protocols have been compiled by the coordinate agent framework.</p>
+        `,
+        papers: [
+          { title: "Metformin as a potential therapeutic agent in Alzheimer's disease", abstract: "Clinical study indicating substantial improvements in cognitive indices and synaptic biomarkers.", link: "" }
+        ],
+        summaries: [
+          { title: "Pathway Target Map Summary", summary_raw: "* Activates AMPK biological signaling cascade.\n* Enhances amyloid beta clearance mechanisms." }
+        ]
+      })
+    }
+    setTourStep(0)
+    setTourActive(true)
+  }
+
+  const nextTourStep = () => {
+    if (tourStep < tourSteps.length - 1) {
+      setTourStep(prev => prev + 1)
+    }
+  }
+
+  const prevTourStep = () => {
+    if (tourStep > 0) {
+      setTourStep(prev => prev - 1)
+    }
+  }
+
+  const closeTour = () => {
+    setTourActive(false)
+    localStorage.setItem('tour_completed', 'true')
   }
 
   function startAgentVisualization() {
@@ -345,6 +481,53 @@ export default function Analyzer() {
 
   return (
     <div className="analyzer-page">
+      {/* Dynamic Highlight Ring Overlay for Guided Tour */}
+      <div className="tour-highlight-ring" style={highlightStyle}></div>
+
+      {/* Guided Tour Tooltip Card Overlay */}
+      {tourActive && (
+        <div className="tour-overlay-container">
+          <div className="tour-backdrop" onClick={closeTour}></div>
+          <div className={`tour-tooltip-card step-${tourStep}`}>
+            <div className="tour-progress">
+              Step {tourStep + 1} of {tourSteps.length}
+              <div className="tour-dots">
+                {tourSteps.map((_, i) => (
+                  <span key={i} className={`tour-dot ${i === tourStep ? 'active' : ''}`} />
+                ))}
+              </div>
+            </div>
+            <h4>{tourSteps[tourStep].title}</h4>
+            <p>{tourSteps[tourStep].content}</p>
+            <div className="tour-actions">
+              <button 
+                type="button" 
+                className="btn btn-secondary btn-sm" 
+                onClick={prevTourStep} 
+                disabled={tourStep === 0}
+              >
+                Back
+              </button>
+              {tourStep < tourSteps.length - 1 ? (
+                <button type="button" className="btn btn-primary btn-sm" onClick={nextTourStep}>
+                  Next Step ➔
+                </button>
+              ) : (
+                <button type="button" className="btn btn-primary btn-sm" onClick={closeTour}>
+                  Finish Tour 🎓
+                </button>
+              )}
+            </div>
+            <button type="button" className="tour-close-x" onClick={closeTour}>✕</button>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Tour Guide Launch Button */}
+      <button type="button" className="floating-tour-trigger animate-bounce-glowing" onClick={startTour}>
+        ✨ Take Guided Tour
+      </button>
+
       <div className="container">
         {/* Page Header */}
         <header className="analyzer-header">

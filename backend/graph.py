@@ -29,7 +29,8 @@ def master_agent(state: GraphState) -> GraphState:
 
 def search_agent(state: GraphState) -> GraphState:
     """
-    Search agent that retrieves relevant papers from the mock dataset.
+    Search agent that retrieves relevant papers from the mock dataset,
+    or uses pre-loaded papers if already populated in the state.
     
     Args:
         state: Current graph state
@@ -37,6 +38,10 @@ def search_agent(state: GraphState) -> GraphState:
     Returns:
         Updated state with papers list
     """
+    if state.get("papers"):
+        print(f"[SEARCH AGENT] Utilizing uploaded PDF document: {state['papers'][0]['title']}")
+        return state
+        
     drug = state["drug"]
     disease = state["disease"]
     print(f"[SEARCH AGENT] Searching for papers: {drug} + {disease}")

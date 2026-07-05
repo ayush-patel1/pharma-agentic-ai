@@ -44,7 +44,7 @@ export default function Navbar() {
           </a>
         </div>
         
-        <Link to="/analyzer" className="btn-primary">
+        <Link to="/analyzer" className="btn btn-primary">
           Start Analysis
         </Link>
       </div>

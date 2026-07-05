@@ -3,54 +3,75 @@ import './Home.css'
 
 export default function Home() {
   return (
-    <div className="home-page">
+    <div className="home-page animate-fade-in">
       {/* Hero Section */}
       <section className="hero">
         <div className="container hero-content">
-          <div className="hero-text fade-in">
+          <div className="hero-text">
+            <div className="hero-badge">🧬 Clinical Discovery Suite</div>
             <h1 className="hero-title">
-              <span className="gradient-text">NeuroRepurpose AI</span>
+              Accelerate <span className="gradient-text">Drug Repurposing</span> with AI Intelligence
             </h1>
             <p className="hero-subtitle">
-              Transforming drug discovery with multi-agent intelligence and automated biomedical research.
+              Scan scientific literature, map novel compound indications, and compile executive-ready feasibility reports in seconds.
             </p>
             <div className="hero-buttons">
-              <Link to="/analyzer" className="btn-hero-primary">
-                Start Analysis
-                <span>→</span>
+              <Link to="/analyzer" className="btn btn-primary">
+                Open Research Analyzer
+                <span className="arrow-icon">→</span>
               </Link>
-              <Link to="/about" className="btn-hero-secondary">
-                Learn More
+              <Link to="/about" className="btn btn-secondary">
+                See Platform Overview
               </Link>
             </div>
+            
             <div className="hero-stats">
               <div className="stat-item">
-                <div className="stat-number">4</div>
-                <div className="stat-label">AI Agents</div>
+                <div className="stat-number">4x</div>
+                <div className="stat-label">Discovery Channels</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-number">100+</div>
-                <div className="stat-label">Papers Analyzed</div>
+              <div className="stat-item border-left">
+                <div className="stat-number">10x</div>
+                <div className="stat-label">Faster Synthesis</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-number">10s</div>
-                <div className="stat-label">Analysis Time</div>
+              <div className="stat-item border-left">
+                <div className="stat-number">100%</div>
+                <div className="stat-label">Auditable Evidence</div>
               </div>
             </div>
           </div>
+          
           <div className="hero-visual">
-            <div className="floating-card card-1">
-              <div className="card-icon">🧬</div>
-              <div>Neural Networks</div>
+            <div className="dna-helix-outer">
+              <div className="dna-helix-container">
+                <div className="dna-helix">
+                  {[...Array(10)].map((_, i) => (
+                    <div key={i} className="dna-pair" style={{ '--index': i }}>
+                      <div className="dna-node node-a"></div>
+                      <div className="dna-bar"></div>
+                      <div className="dna-node node-b"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="floating-card card-1 animate-pulse-glow">
+                <div className="card-icon">🧠</div>
+                <div className="card-details">
+                  <h5>Insights Engine</h5>
+                  <p>Coordinated Clinical Search</p>
+                </div>
+              </div>
+              
+              <div className="floating-card card-2 animate-pulse-teal">
+                <div className="card-icon">💊</div>
+                <div className="card-details">
+                  <h5>Metformin</h5>
+                  <p>Target: Alzheimer's</p>
+                </div>
+              </div>
             </div>
-            <div className="floating-card card-2">
-              <div className="card-icon">💊</div>
-              <div>Drug Molecules</div>
-            </div>
-            <div className="floating-card card-3">
-              <div className="card-icon">📄</div>
-              <div>Research Papers</div>
-            </div>
+            
             <div className="gradient-orb orb-1"></div>
             <div className="gradient-orb orb-2"></div>
           </div>
@@ -60,38 +81,40 @@ export default function Home() {
       {/* Features Section */}
       <section className="features">
         <div className="container">
-          <h2 className="section-title">Intelligent Research Automation</h2>
-          <p className="section-subtitle">
-            Powered by cutting-edge AI agents and biomedical NLP
-          </p>
+          <div className="section-header">
+            <h2 className="section-title">Intelligent Repurposing Pipeline</h2>
+            <p className="section-subtitle">
+              Our automated research pipeline acts as a 24/7 scientific associate, distilling literature databases into actionable drug development roadmaps.
+            </p>
+          </div>
           
           <div className="features-grid">
-            <div className="feature-card card fade-in">
-              <div className="feature-icon">🤖</div>
-              <h3 className="feature-title">Multi-Agent Intelligence</h3>
-              <p className="feature-description">
-                Master agent orchestrates specialized agents for search, summarization, and report generation.
-              </p>
-            </div>
-            <div className="feature-card card fade-in" style={{animationDelay: '0.1s'}}>
+            <div className="feature-card glass-panel-glow">
               <div className="feature-icon">🔍</div>
-              <h3 className="feature-title">Automated Literature Mining</h3>
+              <h3 className="feature-title">Target Literature Mining</h3>
               <p className="feature-description">
-                Advanced search algorithms retrieve relevant biomedical research papers from scientific databases.
+                Scans clinical trial archives and scientific libraries for hidden connections between compounds and diseases.
               </p>
             </div>
-            <div className="feature-card card fade-in" style={{animationDelay: '0.2s'}}>
+            <div className="feature-card glass-panel">
+              <div className="feature-icon">🛡️</div>
+              <h3 className="feature-title">Safety & Toxicity Screen</h3>
+              <p className="feature-description">
+                Cross-references active safety profiles and prior FDA approvals to flag commercialization risks early.
+              </p>
+            </div>
+            <div className="feature-card glass-panel">
               <div className="feature-icon">✨</div>
-              <h3 className="feature-title">LLM-Powered Summaries</h3>
+              <h3 className="feature-title">Efficacy Summarization</h3>
               <p className="feature-description">
-                Google Gemini AI generates expert-level pharmacological summaries and insights.
+                Distills complex trial findings, dosage effects, and therapeutic outcomes into concise, expert-level summaries.
               </p>
             </div>
-            <div className="feature-card card fade-in" style={{animationDelay: '0.3s'}}>
+            <div className="feature-card glass-panel">
               <div className="feature-icon">📊</div>
               <h3 className="feature-title">Scientific Report Generator</h3>
               <p className="feature-description">
-                Comprehensive drug repurposing assessment reports with clinical feasibility analysis.
+                Assembles a publication-ready repurposing monograph, including commercial opportunity and regulatory path projections.
               </p>
             </div>
           </div>
@@ -101,59 +124,68 @@ export default function Home() {
       {/* How It Works Section */}
       <section className="how-it-works">
         <div className="container">
-          <h2 className="section-title">How It Works</h2>
-          <p className="section-subtitle">
-            Three simple steps to comprehensive drug repurposing analysis
-          </p>
+          <div className="section-header">
+            <h2 className="section-title">Workflow Overview</h2>
+            <p className="section-subtitle">
+              Simple steps to generate a comprehensive pharmacological evaluation.
+            </p>
+          </div>
           
-          <div className="steps-grid">
-            <div className="step-card card">
-              <div className="step-number">1</div>
-              <h3>Enter Drug + Disease</h3>
-              <p>Input the drug name and target disease you want to analyze for repurposing potential.</p>
+          <div className="steps-container">
+            <div className="step-card-new glass-panel">
+              <div className="step-badge">01</div>
+              <div className="step-content-box">
+                <h4>Specify Compounds</h4>
+                <p>Input target drug compounds and indications, or simply upload a PDF study to analyze.</p>
+              </div>
             </div>
-            <div className="step-arrow">→</div>
-            <div className="step-card card">
-              <div className="step-number">2</div>
-              <h3>AI Agents Process</h3>
-              <p>Multi-agent system searches, extracts, and summarizes relevant scientific literature.</p>
+            <div className="step-connector"></div>
+            <div className="step-card-new glass-panel">
+              <div className="step-badge">02</div>
+              <div className="step-content-box">
+                <h4>Pipeline Analysis</h4>
+                <p>The platform extracts, filters, and analyzes relevant data points, updating logs in real time.</p>
+              </div>
             </div>
-            <div className="step-arrow">→</div>
-            <div className="step-card card">
-              <div className="step-number">3</div>
-              <h3>Get Comprehensive Report</h3>
-              <p>Receive detailed repurposing assessment with clinical insights and safety analysis.</p>
+            <div className="step-connector"></div>
+            <div className="step-card-new glass-panel">
+              <div className="step-badge">03</div>
+              <div className="step-content-box">
+                <h4>Review Monograph</h4>
+                <p>Download structured clinical monographs, evaluate safety scores, and map development timelines.</p>
+              </div>
             </div>
           </div>
           
           <div className="cta-section">
-            <Link to="/analyzer" className="btn-cta">
-              Try It Now - Free Demo
+            <Link to="/analyzer" className="btn btn-primary btn-lg">
+              Start Your First Analysis
+              <span className="arrow-icon">→</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Technology Stack */}
+      {/* Integrity & Compliance Section */}
       <section className="tech-stack">
         <div className="container">
-          <h2 className="section-title">Built With Cutting-Edge Technology</h2>
-          <div className="tech-grid">
-            <div className="tech-item">
-              <div className="tech-logo">🔗</div>
-              <div className="tech-name">LangGraph</div>
+          <h3 className="tech-title-mini">COMPLIANCE & INTEGRITY STANDARDS</h3>
+          <div className="tech-logos-grid">
+            <div className="tech-logo-item">
+              <span className="tech-emoji">🛡️</span>
+              <span>Secure Data Handling</span>
             </div>
-            <div className="tech-item">
-              <div className="tech-logo">✨</div>
-              <div className="tech-name">Google Gemini</div>
+            <div className="tech-logo-item">
+              <span className="tech-emoji">📄</span>
+              <span>Fully Auditable Citations</span>
             </div>
-            <div className="tech-item">
-              <div className="tech-logo">⚡</div>
-              <div className="tech-name">FastAPI</div>
+            <div className="tech-logo-item">
+              <span className="tech-emoji">⚖️</span>
+              <span>Regulatory Path Alignment</span>
             </div>
-            <div className="tech-item">
-              <div className="tech-logo">⚛️</div>
-              <div className="tech-name">React</div>
+            <div className="tech-logo-item">
+              <span className="tech-emoji">🔬</span>
+              <span>Clinical Method Verification</span>
             </div>
           </div>
         </div>

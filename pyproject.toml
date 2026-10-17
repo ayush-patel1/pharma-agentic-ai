@@ -1,3 +1,18 @@
 
+[project]
+name = "pharma-agentic-ai"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "langgraph",
+    "langchain-core",
+    "google-generativeai",
+    "pypdf",
+    "python-dotenv",
+    "python-multipart"
+]
+
 [tool.vercel]
 entrypoint = "backend.main:app"

@@ -1,176 +1,44 @@
-# Pharma Agentic LangGraph - System Architecture
+# NeuroRepurpose AI — System Architecture
 
-## Agent Flow Diagram
+## Request flow
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                          USER INTERFACE                          │
-│                    (React + Vite Frontend)                       │
-│                                                                   │
-│  ┌─────────────┐  ┌──────────────┐  ┌────────────────────────┐ │
-│  │ Drug Input  │  │ Disease Input│  │  Run Analysis Button   │ │
-│  └─────────────┘  └──────────────┘  └────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
-                            │ HTTP POST
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                       FASTAPI BACKEND                            │
-│                      (REST API Layer)                            │
-│                                                                   │
-│  Endpoint: POST /run                                             │
-│  Input: { drug: string, disease: string }                       │
-└─────────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    LANGGRAPH WORKFLOW                            │
-│                    (Agent Orchestration)                         │
-│                                                                   │
-│   ┌───────────────────────────────────────────────────────┐    │
-│   │  MASTER AGENT                                         │    │
-│   │  • Plans workflow tasks                               │    │
-│   │  • Initializes state                                  │    │
-│   │  • Task list: [search, summarize, report]            │    │
-│   └───────────────────────────────────────────────────────┘    │
-│                            │                                     │
-│                            ▼                                     │
-│   ┌───────────────────────────────────────────────────────┐    │
-│   │  SEARCH AGENT                                         │    │
-│   │  • Calls search_mock_papers() tool                    │    │
-│   │  • Filters by drug/disease keywords                   │    │
-│   │  • Returns top 5 papers                               │    │
-│   └───────────────────────────────────────────────────────┘    │
-│                            │                                     │
-│                            ▼                                     │
-│   ┌───────────────────────────────────────────────────────┐    │
-│   │  SUMMARIZER AGENT                                     │    │
-│   │  • Loops through each paper                           │    │
-│   │  • Calls summarize_paper() tool                       │    │
-│   │  • Uses OpenAI GPT-4o-mini                            │    │
-│   │  • Generates key findings + relevance scores          │    │
-│   └───────────────────────────────────────────────────────┘    │
-│                            │                                     │
-│                            ▼                                     │
-│   ┌───────────────────────────────────────────────────────┐    │
-│   │  REPORT AGENT                                         │    │
-│   │  • Aggregates all summaries                           │    │
-│   │  • Uses OpenAI GPT-4o-mini                            │    │
-│   │  • Generates structured report:                       │    │
-│   │    - Executive Summary                                │    │
-│   │    - Evidence Overview                                │    │
-│   │    - Benefits & Risks                                 │    │
-│   │    - Conclusion                                       │    │
-│   └───────────────────────────────────────────────────────┘    │
-│                            │                                     │
-└────────────────────────────┼─────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     EXTERNAL SERVICES                            │
-│                                                                   │
-│  ┌──────────────────┐          ┌──────────────────────┐        │
-│  │  Google Gemini   │          │  Mock Papers Dataset │        │
-│  │  API (gemini-pro)│          │  (data/mock_papers.  │        │
-│  │  - Summarization │          │   json)              │        │
-│  │  - Report Gen    │          │  - 10 curated papers │        │
-│  └──────────────────┘          └──────────────────────┘        │
-└─────────────────────────────────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      RESPONSE TO USER                            │
-│                                                                   │
-│  {                                                               │
-│    drug: "Metformin",                                           │
-│    disease: "Alzheimer's",                                      │
-│    papers: [...],      // 5 papers with title, abstract, link  │
-│    summaries: [...],   // 5 AI summaries with key findings     │
-│    final_report: "..." // Structured repurposing report        │
-│  }                                                               │
-└─────────────────────────────────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    UI RESULTS DISPLAY                            │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ 📚 Retrieved Papers (Cards)                             │   │
-│  │ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐       │   │
-│  │ │ Paper 1 │ │ Paper 2 │ │ Paper 3 │ │ Paper 4 │ ...   │   │
-│  │ └─────────┘ └─────────┘ └─────────┘ └─────────┘       │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ 📝 AI Summaries (Cards)                                 │   │
-│  │ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │   │
-│  │ │Summary 1 │ │Summary 2 │ │Summary 3 │ │Summary 4 │.. │   │
-│  │ └──────────┘ └──────────┘ └──────────┘ └──────────┘   │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ 📊 Final Repurposing Report                             │   │
-│  │                                                           │   │
-│  │ • Executive Summary                                       │   │
-│  │ • Evidence Overview                                       │   │
-│  │ • Potential Benefits & Risks                              │   │
-│  │ • Conclusion (Recommendation for further investigation)   │   │
-│  └─────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
+```text
+React / Vite
+    │ JSON query or multipart PDF
+    ▼
+FastAPI
+    │
+    ▼
+LangGraph: Master → Search / Extraction → Summarizer → Report
+                 │                   │
+                 │                   └─ Configured AI service
+                 ├─ NCBI PubMed E-utilities
+                 └─ pypdf (first eight PDF pages)
+    │
+    ▼
+Source-linked HTML evidence report + source records
 ```
 
-## State Flow
+## Endpoints
 
-```
-Initial State                      After Master         After Search
-─────────────                      ─────────────        ─────────────
-drug: "Metformin"        →         + tasks: [...]  →    + papers: [5]
-disease: "Alzheimer's"              
-query: "..."                       
+- `POST /run` accepts a compound and indication, searches PubMed for records mentioning both terms in their title or abstract, and runs the workflow.
+- `POST /run-pdf` accepts a PDF and optional research terms. It extracts text from up to the first eight pages, searches PubMed for related records, and analyzes the extracted text alongside those records.
 
-After Summarizer                   After Reporter       Final Output
-────────────────                   ──────────────       ────────────
-+ summaries: [5]      →            + final_report  →    Return JSON
-  (AI generated)                     (structured)        to frontend
-```
+The PDF upload limit is 15 MB. The service rejects unreadable, encrypted, or text-empty PDFs; scanned/image-only documents are not OCR-processed. When research terms are omitted, the configured AI service attempts to identify both from the extracted paper text. If identification is incomplete, the request asks for the missing terms rather than substituting the filename.
 
-## Technology Stack
+## Agent responsibilities
 
-### Backend
-- **FastAPI**: REST API framework
-- **LangGraph**: Agent workflow orchestration
-- **LangChain**: LLM integration framework
-- **Google Gemini**: gemini-pro for summarization
-- **Pydantic**: Data validation
-- **Uvicorn**: ASGI server
+1. **Master Agent** initializes the compound–indication workflow.
+2. **Search / Extraction Agent** retrieves PubMed records or retains the uploaded document and its related PubMed results.
+3. **Summarizer Agent** summarizes each abstract or extracted document text separately, preserving source titles and links. Synthesis is restricted to supplied text; service and malformed-response errors stop the request rather than producing fallback summaries.
+4. **Report Agent** assembles an HTML report from the source metadata and summaries. It does not produce clinical scores or treatment recommendations.
 
-### Frontend
-- **React 18**: UI library
-- **Vite**: Build tool & dev server
-- **Modern CSS**: Gradients, animations, responsive design
+PubMed records contain a PMID and a link to their original PubMed entry. PDF text is labeled as an uploaded document. Missing abstracts are marked as unavailable and are not summarized.
 
-### Data
-- **Mock Dataset**: 10 curated pharmaceutical research papers
-- **JSON Format**: Title, abstract, link
+## Configuration and limitations
 
-## Key Features
-
-1. **Multi-Agent Collaboration**: Specialized agents for different tasks
-2. **State Management**: Shared state flows through all agents
-3. **LLM Integration**: OpenAI for intelligent summarization
-4. **RESTful API**: Clean interface between frontend/backend
-5. **Modern UI**: Card-based layout with loading states
-6. **Mock Data**: Realistic pharmaceutical literature
-
-## Performance Characteristics
-
-- **Response Time**: ~15-30 seconds (depends on OpenAI API)
-- **Parallel Processing**: Sequential agent execution
-- **Scalability**: Can easily add more agents or papers
-- **Error Handling**: Graceful failures with user feedback
-
-## Extension Points
-
-1. **New Agents**: Add to graph.py
-2. **New Tools**: Add to tools.py
-3. **Real APIs**: Replace mock_papers.json with PubMed API
-4. **Advanced Features**: PDF export, caching, batch processing
+- Set `GEMINI_API_KEY` in the backend environment for AI synthesis and optional PDF term detection.
+- PubMed retrieval uses NCBI E-utilities and requires network access. `NCBI_API_KEY` and `PUBMED_EMAIL` are optional environment variables.
+- PubMed title/abstract search is focused, not systematic, and may miss relevant literature.
+- AI-generated summaries can be incomplete or incorrect. Verify statements against the original publications.
+- Do not upload confidential or identifiable documents. This project does not claim HIPAA compliance and does not provide medical, safety, efficacy, or regulatory advice.

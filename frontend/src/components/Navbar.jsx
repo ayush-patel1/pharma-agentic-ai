@@ -8,10 +8,14 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container navbar-content">
         <Link to="/" className="navbar-brand">
-          <div className="brand-icon">🧬</div>
+          <div className="brand-icon" aria-hidden="true">
+            <span className="brand-shape brand-circle" />
+            <span className="brand-shape brand-square" />
+            <span className="brand-shape brand-triangle" />
+          </div>
           <div className="brand-text">
-            <span className="brand-name">NeuroRepurpose AI</span>
-            <span className="brand-tagline">Multi-Agent Research Platform</span>
+            <span className="brand-name">NeuroRepurpose</span>
+            <span className="brand-tagline">Drug research workspace</span>
           </div>
         </Link>
         
@@ -20,32 +24,25 @@ export default function Navbar() {
             to="/" 
             className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
           >
-            Home
+            Workspace
           </Link>
           <Link 
             to="/about" 
             className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
           >
-            About
+            Methodology
           </Link>
           <Link 
             to="/analyzer" 
             className={`nav-link ${location.pathname === '/analyzer' ? 'active' : ''}`}
           >
-            Analyzer
+            Analyze
           </Link>
-          <a 
-            href="https://github.com/ayush-patel1/pharma-agentic-ai" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="nav-link"
-          >
-            GitHub
-          </a>
+          <Link to="/#faq" className="nav-link">FAQ</Link>
         </div>
         
         <Link to="/analyzer" className="btn btn-primary">
-          Start Analysis
+          New analysis
         </Link>
       </div>
     </nav>

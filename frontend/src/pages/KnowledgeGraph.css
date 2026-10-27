@@ -1,0 +1,203 @@
+.graph-page {
+  padding: 3rem 0 5rem 0;
+}
+
+.graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.compound-selector-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.compound-tab-btn {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  color: var(--color-text-secondary);
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.compound-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+}
+
+.compound-tab-btn.active {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
+}
+
+.graph-canvas-card {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.canvas-header {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.775rem;
+  color: var(--color-text-muted);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-dot.teal { background: #06B6D4; box-shadow: 0 0 6px #06B6D4; }
+.legend-dot.blue { background: #3B82F6; box-shadow: 0 0 6px #3B82F6; }
+.legend-dot.green { background: #10B981; box-shadow: 0 0 6px #10B981; }
+.legend-dot.violet { background: #8B5CF6; box-shadow: 0 0 6px #8B5CF6; }
+
+.interactive-svg-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.knowledge-graph-svg {
+  width: 100%;
+  min-width: 750px;
+  height: auto;
+}
+
+.graph-edge-line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 2;
+  stroke-dasharray: 6, 6;
+  animation: edgeFlow 20s linear infinite;
+}
+
+@keyframes edgeFlow {
+  to { stroke-dashoffset: -360px; }
+}
+
+.svg-graph-node {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.svg-graph-node:hover {
+  filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
+}
+
+.node-shape.compound {
+  fill: #083344;
+  stroke: #06B6D4;
+  stroke-width: 2.5;
+}
+
+.node-shape.target {
+  fill: #1e1b4b;
+  stroke: #3B82F6;
+  stroke-width: 2;
+}
+
+.node-shape.mechanism {
+  fill: #064e3b;
+  stroke: #10B981;
+  stroke-width: 2;
+}
+
+.node-shape.disease {
+  fill: #4c1d95;
+  stroke: #8B5CF6;
+  stroke-width: 2.5;
+}
+
+.svg-node-text {
+  fill: #fff;
+  font-family: var(--font-primary);
+  user-select: none;
+  pointer-events: none;
+}
+
+.svg-node-text.bold {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.svg-node-text.sm {
+  font-size: 0.775rem;
+  font-weight: 600;
+}
+
+.svg-node-meta {
+  fill: var(--color-secondary);
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  user-select: none;
+  pointer-events: none;
+}
+
+.graph-instructions {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.node-inspector-card {
+  padding: 1.75rem 2rem;
+  border-left: 4px solid var(--color-secondary);
+}
+
+.inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.node-inspector-card h3 {
+  font-size: 1.35rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.affinity-line {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.affinity-line code {
+  color: var(--color-secondary);
+  font-family: var(--font-mono);
+  background: rgba(6, 182, 212, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.node-desc-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}

@@ -14,17 +14,47 @@ export default function Navbar() {
             <span className="brand-shape brand-triangle" />
           </div>
           <div className="brand-text">
-            <span className="brand-name">NeuroRepurpose</span>
-            <span className="brand-tagline">Drug research workspace</span>
+            <span className="brand-name">NeuroRepurpose AI</span>
+            <span className="brand-tagline">Biomedical Intelligence Suite</span>
           </div>
         </Link>
         
         <div className="navbar-links">
           <Link 
-            to="/" 
-            className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+            to="/workspace" 
+            className={`nav-link ${location.pathname === '/workspace' ? 'active' : ''}`}
           >
             Workspace
+          </Link>
+          <Link 
+            to="/analyzer" 
+            className={`nav-link ${location.pathname === '/analyzer' ? 'active' : ''}`}
+          >
+            Analyzer
+          </Link>
+          <Link 
+            to="/evidence" 
+            className={`nav-link ${location.pathname === '/evidence' ? 'active' : ''}`}
+          >
+            Evidence Explorer
+          </Link>
+          <Link 
+            to="/chat" 
+            className={`nav-link ${location.pathname === '/chat' ? 'active' : ''}`}
+          >
+            Research Chat
+          </Link>
+          <Link 
+            to="/graph" 
+            className={`nav-link ${location.pathname === '/graph' ? 'active' : ''}`}
+          >
+            Target Graph
+          </Link>
+          <Link 
+            to="/reports" 
+            className={`nav-link ${location.pathname === '/reports' ? 'active' : ''}`}
+          >
+            Reports
           </Link>
           <Link 
             to="/about" 
@@ -32,17 +62,10 @@ export default function Navbar() {
           >
             Methodology
           </Link>
-          <Link 
-            to="/analyzer" 
-            className={`nav-link ${location.pathname === '/analyzer' ? 'active' : ''}`}
-          >
-            Analyze
-          </Link>
-          <Link to="/#faq" className="nav-link">FAQ</Link>
         </div>
         
-        <Link to="/analyzer" className="btn btn-primary">
-          New analysis
+        <Link to="/analyzer" className="btn btn-primary nav-cta-btn">
+          🔬 Launch Analysis
         </Link>
       </div>
     </nav>

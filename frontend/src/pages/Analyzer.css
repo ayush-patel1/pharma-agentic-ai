@@ -2519,3 +2519,101 @@
   font-size: 0.82rem;
   line-height: 1.45;
 }
+
+
+/* Advanced Filters & Next Steps Banner */
+.advanced-filters-bar {
+  margin: 1.25rem 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.toggle-advanced-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-secondary);
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.advanced-filter-controls {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filter-input-item label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.filter-input-item input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.75rem;
+  color: var(--color-text-primary);
+  font-size: 0.85rem;
+  width: 120px;
+}
+
+.filter-checkbox-item {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.filter-checkbox-item label {
+  font-size: 0.825rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.next-steps-hub-banner {
+  padding: 1.75rem 2.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--color-secondary);
+  background: rgba(6, 182, 212, 0.04);
+}
+
+.next-steps-info h3 {
+  font-size: 1.25rem;
+  margin: 0.35rem 0;
+}
+
+.next-steps-info p {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.next-steps-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.retrieval-score-badge {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--color-secondary);
+  background: rgba(6, 182, 212, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}

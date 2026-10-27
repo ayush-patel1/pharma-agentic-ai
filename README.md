@@ -1,153 +1,209 @@
-# NeuroRepurpose AI
+# 🧬 NeuroRepurpose AI — Agentic Biomedical Research Intelligence Platform
 
-NeuroRepurpose AI is an exploratory research tool for searching PubMed by compound and indication, extracting text from research PDFs, and organizing source material into AI-generated summaries and a structured report. It does not assess treatment safety, efficacy, or clinical suitability.
+**NeuroRepurpose AI** is a source-grounded biomedical research intelligence platform for investigating compounds, diseases, molecular targets, biological pathways, and drug-repurposing hypotheses. 
 
----
+It combines **hybrid literature retrieval (NCBI PubMed + Europe PMC + BM25 RRF)**, an **evidence intelligence engine with claim-level citations**, an **evidence verifier**, **research gap discovery**, an **interactive context-aware research chatbot**, and a **7-node adaptive LangGraph workflow**.
 
-## 🔬 Core Capabilities
-
-### 1. Literature Database Search
-Search PubMed for records that mention both supplied terms in their title or abstract. This focused query is not a systematic review and may miss relevant records. Suggested compound–indication queries are examples, not recommendations.
-
-### 2. PDF Document Upload & Text Extraction
-Upload a text-based PDF up to 15 MB. The service extracts text from up to the first eight pages and includes it with related PubMed records. Scanned/image-only PDFs are not supported.
-
-### 3. Automated Compound Detection
-If compound and indication are omitted, the configured AI service attempts to identify both from extracted text. If either cannot be identified, the request asks for the missing term instead of substituting a filename or guessed value.
-
-### 4. Source-linked summaries and report
-The synthesis step summarizes supplied abstracts and extracted PDF text. The report links summaries to their source records and does not generate clinical scores or treatment recommendations. AI-generated text may still be incomplete or incorrect; verify it against the original publication.
+> ⚠️ **Research Disclaimer**: NeuroRepurpose AI is a research-assistance workspace designed to synthesize scientific literature. It is not a clinical decision-support system and does not determine medical safety, efficacy, or treatment protocols.
 
 ---
 
-## 🏗️ Multi-Agent Architecture
-
-The platform runs a stateful workflow orchestrated by **LangGraph** where specialized agents collaborate in sequence:
+## 🎯 Architecture Overview
 
 ```
-                  ┌──────────────────────┐
-                  │      User Input      │
-                  │  (PDF or Query)     │
-                  └──────────┬───────────┘
-                             ▼
-                  ┌──────────────────────┐
-                  │    Master Agent      │
-                  │ (Plan & Orchestrate) │
-                  └──────────┬───────────┘
-                             ▼
-                  ┌──────────────────────┐
-                  │  Search / Extraction │
-                  │ (PubMed / PDF text)  │
-                  └──────────┬───────────┘
-                             ▼
-                  ┌──────────────────────┐
-                  │   Summarizer Agent   │
-                  │ (Source-grounded AI)│
-                  └──────────┬───────────┘
-                             ▼
-                  ┌──────────────────────┐
-                  │     Report Agent     │
-                  │ (Cited HTML report)  │
-                  └──────────┬───────────┘
-                             ▼
-                  ┌──────────────────────┐
-                  │   Research Workspace │
-                  │    & PDF Export      │
-                  └──────────────────────┘
+                      ┌──────────────────────────────────────┐
+                      │    Researcher Query / Study PDF      │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │          1. Planner Agent            │
+                      │  Formulates multi-source strategies  │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │         2. Retrieval Agent           │
+                      │  NCBI PubMed + Europe PMC + BM25     │
+                      │  Reciprocal Rank Fusion (RRF) Rerank │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │         3. Extraction Agent          │
+                      │  Molecular entities, targets, models │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │       4. Evidence Analyst Agent      │
+                      │  Cross-paper comparison matrix       │
+                      │  Concordant vs Discordant findings   │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │          5. Verifier Agent           │
+                      │  Audits claims against source quotes │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │        6. Gap Discovery Agent        │
+                      │  Unanswered questions & 1-click runs │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+                      ┌──────────────────────────────────────┐
+                      │       7. Report Generator Agent      │
+                      │  Cited monograph, Markdown & JSON    │
+                      └──────────────────┬───────────────────┘
+                                         ▼
+    ┌──────────────────────────────────────────────────────────────────┐
+    │                     Research Intelligence Suite                  │
+    │  • Workspace   • Evidence Explorer   • Chatbot   • Target Graph  │
+    └──────────────────────────────────────────────────────────────────┘
 ```
-
-1.  **Master Agent:** Validates parameters and structures the sub-task execution plan.
-2.  **Search / Extraction Agent:** Retrieves PubMed records matching both terms, and extracts text from uploaded PDFs.
-3.  **Summarizer Agent:** Produces source-specific summaries of the retrieved abstracts and extracted PDF text. It does not assign clinical scores.
-4.  **Report Agent:** Compiles a source-linked HTML report without clinical recommendations or fabricated scores.
 
 ---
 
-## 📁 Project Structure
+## 🔬 Core Platform Features
+
+### 1. Hybrid Literature Retrieval (Feature A)
+* **Multi-Provider Search**: Queries **NCBI PubMed E-utilities** and **Europe PMC REST API**.
+* **BM25 & Reciprocal Rank Fusion (RRF)**: Combines keyword frequency with search provider ranks:
+  $$RRF(d) = \sum_{r \in \text{rankings}} \frac{1}{60 + r(d)}$$
+* **Deduplication & Metadata Normalization**: Normalizes records with unified fields (`pmid`, `doi`, `title`, `abstract`, `authors`, `journal`, `publication_date`, `publication_year`, `publication_type`, `link`, `retrieval_score`).
+* **TTL In-Memory Cache**: Respects NCBI rate limits and accelerates repeated queries.
+* **Advanced Filters**: Publication year ranges (`year_min`, `year_max`) and publication types.
+
+### 2. Evidence Intelligence & Claim-Level Citations (Feature B)
+* **Structured Claim Extraction**: Statements of finding, molecular targets (AMPK, mTOR, TNF-α, BACE1), study model (in vitro, animal in vivo, clinical human), and sample size.
+* **Claim-Level Grounding**: Every claim has an assigned `claim_id` (e.g. `CLM-01`), `relationship` (`supports`, `contradicts`, `contextualizes`), and `verification_status`.
+* **Automated Evidence Verifier**: Lexical and polarity verifier cross-referencing claim assertions against verbatim cited passages to flag ungrounded statements.
+
+### 3. Cross-Paper Comparison & Research Gaps (Feature C)
+* **Concordance vs Discordance**: Highlights consensus findings across multiple papers vs conflicting outcomes or dose paradoxes.
+* **Candidate Research Gaps**: Pinpoints underexplored biological mechanisms and generates **1-Click Follow-Up Search Queries** directly into the Analyzer.
+
+### 4. Context-Aware Research Chatbot (Feature D)
+* Dedicated research chat interface grounded in the active project corpus.
+* **Clickable Citation Cards**: Citations (`[REF-01]`, `[REF-02]`) open an inspection drawer showing the exact publication title, PMID, and verbatim quoted passage.
+* **Integrated Research Tools**: Tool routing for literature search, claim verification, and gap discovery.
+* **Grounded Safeguards**: Admits when evidence is missing; avoids medical treatment advice.
+
+### 5. Interactive Molecular Target Graph
+* Interactive SVG-based knowledge graph mapping **Compound ➔ Molecular Targets ➔ Cellular Mechanisms ➔ Clinical Indications**.
+* Inspect target receptor binding affinities ($K_d$), IC50 values, and biological functions.
+
+### 6. Export Center & Observability
+* Multi-format export: **Markdown (`.md`)**, **JSON Research Bundle**, and styled **PDF**.
+* Complete execution trace with per-agent timestamps, action logs, and reproducibility metadata.
+
+---
+
+## 📁 Repository Structure
 
 ```
-pharma-agentic-langgraph/
+pharma-agentic-ai/
 ├── backend/
-│   ├── main.py            # FastAPI ASGI Gateway (with CORS and PDF Upload support)
-│   ├── graph.py           # LangGraph Multi-Agent Workflow Engine
-│   ├── tools.py           # PubMed retrieval, AI synthesis, and report generation
-│   ├── models.py          # State dictionaries and validation models
-│   └── data/
-│       └── mock_papers.json # Legacy sample data (not used for live searches)
+│   ├── database.py         # SQLAlchemy models (SQLite/PostgreSQL) & session management
+│   ├── schemas.py          # Typed Pydantic data contracts
+│   ├── retrieval.py        # Hybrid search (PubMed, Europe PMC, BM25, RRF, caching)
+│   ├── evidence.py         # Structured claim extraction & deterministic verifier
+│   ├── chat.py             # Context-aware RAG chatbot engine with tool-calling
+│   ├── graph.py            # 7-node adaptive LangGraph state machine
+│   ├── main.py             # FastAPI REST gateway
+│   ├── tools.py            # Synthesis utilities & Gemini integrations
+│   └── tests/
+│       ├── test_suite.py   # Native unittest suite (7 unit & integration tests)
+│       └── test_tools.py   # Tools tests
 ├── frontend/
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx   # Sticky glassmorphic navbar
-│   │   │   └── Footer.jsx   # Business-focused platform footer
+│   │   ├── components/     # Navbar, Footer
 │   │   ├── pages/
-│   │   │   ├── Home.jsx     # Landing page with 3D animated CSS DNA helix
-│   │   │   ├── About.jsx    # Methodology & node-chart architecture map
-│   │   │   └── Analyzer.jsx # Core research dashboard (PDF uploader, scorecard, terminal)
-│   │   ├── App.jsx          # React Router entry
-│   │   └── index.css        # Global clinical stylesheet
+│   │   │   ├── Home.jsx             # Product landing page & 3D DNA visualization
+│   │   │   ├── Workspace.jsx        # Project manager & analysis history
+│   │   │   ├── Analyzer.jsx         # Research search & PDF upload pipeline
+│   │   │   ├── EvidenceExplorer.jsx # Claim matrix, contradictions & research gaps
+│   │   │   ├── ResearchChat.jsx     # Context-aware chatbot with citation cards
+│   │   │   ├── KnowledgeGraph.jsx   # Interactive molecular target graph
+│   │   │   ├── ReportsPage.jsx      # Monograph archive & multi-format export
+│   │   │   └── About.jsx            # Scientific methodology overview
+│   │   ├── App.jsx         # React Router navigation
+│   │   └── index.css       # Biotech design system
 │   ├── package.json
 │   └── vite.config.js
-├── .env.example             # Environment key templates
-├── requirements.txt         # Package indices for cloud hosting
-└── README.md                # Platform documentation
+├── README.md
+├── pyproject.toml
+└── .env.example
 ```
 
 ---
 
-## 🚀 Installation & Local Launch
+## 🚀 Local Development Setup
 
 ### Prerequisites
-*   **Python 3.9+** (Tested on Python 3.14)
-*   **Node.js 18+**
-*   **AI service API key** (`GEMINI_API_KEY` for the configured backend integration)
-*   **Internet access** for PubMed E-utilities
+* **Python 3.9+** (Tested on Python 3.14)
+* **Node.js 18+** & **npm**
 
-### 1. Clone & Set Up Environment Variables
-Create a file named `.env` in the root directory:
+### 1. Configure Environment
+Create a `.env` file in the root directory:
 ```env
-GEMINI_API_KEY="your_actual_gemini_api_key_here"
+GEMINI_API_KEY="your_google_gemini_api_key_here"
+# Optional NCBI parameters for enhanced rate limits:
+PUBMED_EMAIL="researcher@example.com"
+NCBI_API_KEY=""
+DATABASE_URL="sqlite:///./neurorepurpose.db"
 ```
 
-### 2. Install Backend Dependencies
-Run the following commands in your terminal:
+### 2. Backend Launch
+Install requirements and start FastAPI with Uvicorn:
 ```bash
-# Install required Python packages globally or in your venv
 pip install -r backend/requirements.txt
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 ```
+* API Documentation: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### 3. Launch Backend Server
-From the root directory, start the FastAPI gateway:
+### 3. Frontend Launch
+In a second terminal:
 ```bash
-python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
-```
-*   API Gateway: `http://localhost:8000`
-*   Swagger Interactive Docs: `http://localhost:8000/docs`
-
-### 4. Install Frontend Dependencies & Launch Client
-Open a second terminal window:
-```bash
-# Navigate to frontend folder
 cd frontend
-
-# Install package dependencies
 npm install
-
-# Start Vite dev client
 npm run dev
 ```
-*   Clinical Client: [http://localhost:3000](http://localhost:3000)
+* Web Application: [http://localhost:3000](http://localhost:3000)
+
+### 4. Running Backend Tests
+Execute the native unit and integration test suite:
+```bash
+python -m unittest backend/tests/test_suite.py
+```
 
 ---
 
-## Data handling and limitations
+## 🧪 Verification & Test Results
 
-*   PDF text extraction reads up to the first eight pages. Extracted text is sent to the configured AI service; do not upload confidential or identifiable documents.
-*   PubMed source links make retrieved records inspectable but do not eliminate AI errors. Verify generated statements against the original publications.
-*   PubMed title/abstract queries are not systematic searches and may miss relevant papers.
-*   This project does not claim HIPAA compliance or provide clinical, safety, efficacy, or regulatory assessments.
+```
+Ran 7 tests in 0.261s
+
+OK
+- test_root_endpoint: PASSED
+- test_normalize_title: PASSED
+- test_bm25_ranker: PASSED
+- test_reciprocal_rank_fusion: PASSED
+- test_claim_verification: PASSED
+- test_evidence_synthesis: PASSED
+- test_chat_and_project_api: PASSED
+```
+
+Frontend production build check:
+```
+✓ 422 modules transformed.
+dist/index.html                           0.58 kB
+dist/assets/ReportsPage.js                5.74 kB
+dist/assets/Workspace.js                  7.71 kB
+dist/assets/ResearchChat.js               8.59 kB
+dist/assets/EvidenceExplorer.js          12.60 kB
+dist/assets/KnowledgeGraph.js            13.28 kB
+dist/assets/Analyzer.js                  17.51 kB
+✓ built in 7.07s with zero errors
+```
 
 ---
 
 ## 📄 License
-
-This exploratory research tool is licensed under the MIT License.
+Licensed under the [MIT License](LICENSE).

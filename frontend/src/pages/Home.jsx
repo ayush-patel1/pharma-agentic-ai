@@ -1,291 +1,596 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Home.css'
 
-export default function Home() {
-  const [scanActive, setScanActive] = useState(true)
-  const [sensitivity, setSensitivity] = useState(85)
-  const [kdThreshold, setKdThreshold] = useState(25)
-  const [scrolled, setScrolled] = useState(false)
+const SAMPLE_COMPOUNDS = [
+  {
+    drug: 'Metformin',
+    originalIndication: 'Type 2 Diabetes',
+    repurposedIndication: 'Glioblastoma Multiforme',
+    target: 'AMPK / mTOR / Hexokinase II',
+    kd: '1.8 nM',
+    concordance: '94%',
+    phase: 'Phase IIa Candidate',
+    bbb: 'BBB+ Permeable (logBB +0.28)',
+    pmidCount: 42,
+    mechanism: 'Metabolic reprogramming via allosteric activation of AMPK, inhibiting tumor glycolysis.'
+  },
+  {
+    drug: 'Rapamycin',
+    originalIndication: 'Organ Transplant Rejection',
+    repurposedIndication: "Alzheimer's Disease",
+    target: 'mTORC1 Complex / Autophagy',
+    kd: '0.2 nM',
+    concordance: '89%',
+    phase: 'Preclinical Validated',
+    bbb: 'BBB+ Permeable (logBB +0.14)',
+    pmidCount: 68,
+    mechanism: 'Restores microglial autophagy clearance of amyloid-β and hyperphosphorylated tau.'
+  },
+  {
+    drug: 'Donepezil',
+    originalIndication: "Mild-to-Moderate Dementia",
+    repurposedIndication: 'Traumatic Brain Injury',
+    target: 'Acetylcholinesterase (AChE)',
+    kd: '5.7 nM',
+    concordance: '86%',
+    phase: 'Phase I/II Exploratory',
+    bbb: 'BBB+ High (logBB +0.42)',
+    pmidCount: 29,
+    mechanism: 'Mitigates post-injury secondary neurodegeneration and downregulates pro-inflammatory cytokines.'
+  },
+  {
+    drug: 'Imatinib',
+    originalIndication: 'Chronic Myeloid Leukemia',
+    repurposedIndication: 'Pulmonary Arterial Hypertension',
+    target: 'PDGFR-α/β / c-KIT / ABL',
+    kd: '12.4 nM',
+    concordance: '91%',
+    phase: 'Phase II Repurposing',
+    bbb: 'BBB- Low (Peripheral Specific)',
+    pmidCount: 35,
+    mechanism: 'Reverses vascular pulmonary arterial remodeling by blocking PDGF receptor phosphorylation.'
+  }
+]
 
-  // Quantum Teleport scroll trigger
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+const FAQ_ITEMS = [
+  {
+    q: 'How does the multi-agent literature retrieval work?',
+    a: 'NeuroRepurpose AI queries both PubMed (NCBI) and Europe PMC simultaneously using Boolean bio-queries. Results are deduplicated and scored using BM25 token relevance combined with Reciprocal Rank Fusion (RRF), ensuring top-ranking peer-reviewed clinical studies are prioritized.'
+  },
+  {
+    q: 'What is deterministic claim verification?',
+    a: 'Unlike generic LLMs that hallucinate facts, our deterministic verifier isolates each generated claim, matches it against verbatim text passages retrieved from the original papers, and computes an unalterable lexical and semantic grounding score. If a quote does not support the claim, it is flagged.'
+  },
+  {
+    q: 'How does this accelerate the FDA 505(b)(2) regulatory pathway?',
+    a: 'Because repurposed drugs already have established human safety and toxicology profiles, researchers can leverage existing data under FDA 505(b)(2). Our platform synthesizes off-label preclinical evidence directly into structured regulatory dossiers, cutting early discovery from 4+ years to weeks.'
+  },
+  {
+    q: 'Can researchers upload and analyze their own unpublished PDFs?',
+    a: 'Yes. The analyzer accepts proprietary lab PDFs or newly published preprints, extracts the structured biomedical text, parses binding curves and study models, and integrates them with public database evidence.'
+  }
+]
+
+export default function Home() {
+  const [selectedDrugIndex, setSelectedDrugIndex] = useState(0)
+  const [evidenceThreshold, setEvidenceThreshold] = useState(85)
+  const [kdThreshold, setKdThreshold] = useState(25)
+  const [activeFaq, setActiveFaq] = useState(0)
+  const [isScanning, setIsScanning] = useState(true)
+
+  const activeDrug = SAMPLE_COMPOUNDS[selectedDrugIndex]
 
   return (
-    <div className="quantum-home-page animate-fade-in">
+    <div className="home-container animate-fade-in">
       
-      {/* 1. Hero Section (Min-height 90vh, centered flex column) */}
-      <section className="quantum-hero">
-        
-        {/* Top: Capsule badge with pulsing dot and 'v2.0' label */}
-        <div className="hero-capsule-badge">
-          <span className="pulse-dot"></span>
-          <span>SYSTEM ACTIVE // QUANTUM ENGINE v2.0</span>
-        </div>
+      {/* ===================================================================
+          1. HERO SECTION
+          =================================================================== */}
+      <section className="hero-section">
+        <div className="container hero-content">
+          
+          {/* Status Badge */}
+          <div className="hero-status-pill">
+            <span className="pulse-radar-dot" aria-hidden="true"></span>
+            <span className="pill-text">AUTONOMOUS MULTI-AGENT DRUG REPURPOSING</span>
+            <span className="pill-sep">•</span>
+            <span className="pill-badge">FDA 505(b)(2) FAST-TRACK ENGINE</span>
+          </div>
 
-        {/* Heading: Rajdhani 120px, uppercase, two lines */}
-        <div className="hero-heading-wrapper">
-          <h1 className="hero-quantum-title">
-            <span className="title-line-1">QUANTUM BIOMETRIC</span>
-            <span className="title-line-2 text-cyan-glow">& PHARMA INTELLIGENCE</span>
+          {/* Main Headline */}
+          <h1 className="hero-main-title">
+            <span className="hero-title-line-1">ACCELERATING DRUG REPURPOSING</span>
+            <span className="hero-title-line-2">WITH AGENTIC BIOMEDICAL AI</span>
           </h1>
 
-          {/* 6 Floating Icons positioned absolutely with unique float animations & teleport glitch */}
-          <div className={`floating-icons-container ${scrolled ? 'glitched-teleport-out' : ''}`}>
-            
-            {/* Icon 1: Brain */}
-            <div className="quantum-float-icon icon-brain" style={{ '--float-range': '12px', '--float-dur': '2.4s' }}>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" strokeWidth="1.5">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z" />
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z" />
-              </svg>
-            </div>
+          {/* Subtitle */}
+          <p className="hero-description">
+            Synthesize 38M+ biomedical records from PubMed and Europe PMC into auditable, 
+            mechanistically verified repurposing hypotheses. Deterministically audit molecular target affinities, 
+            detect preclinical research gaps, and export FDA-ready trial monographs in minutes.
+          </p>
 
-            {/* Icon 2: Heart Rate Pulse */}
-            <div className="quantum-float-icon icon-heart" style={{ '--float-range': '15px', '--float-dur': '3.1s' }}>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" strokeWidth="1.5">
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-            </div>
+          {/* Action CTAs */}
+          <div className="hero-actions-row">
+            <Link to="/analyzer" className="btn btn-primary btn-lg">
+              <span>Launch Drug Analyzer</span>
+              <span aria-hidden="true">↗</span>
+            </Link>
+            <Link to="/evidence" className="btn btn-secondary btn-lg">
+              <span>Explore Evidence Matrix</span>
+            </Link>
+            <Link to="/chat" className="btn btn-outline btn-lg">
+              <span>Research Agent Chat</span>
+            </Link>
+          </div>
 
-            {/* Icon 3: DNA Double Helix */}
-            <div className="quantum-float-icon icon-dna" style={{ '--float-range': '10px', '--float-dur': '2.8s' }}>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" strokeWidth="1.5">
-                <path d="M2 15c6.667-6 13.333 0 20-6" />
-                <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993" />
-                <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993" />
-                <path d="M17 6l-2.5-2.5" />
-                <path d="M14 8l-1-1" />
-                <path d="M7 18l2.5 2.5" />
-                <path d="M3.5 14.5l.5.5" />
-                <path d="M20 9.5l.5.5" />
-                <path d="M2 9c6.667 6 13.333 0 20 6" />
-              </svg>
+          {/* Floating Telemetry Chips */}
+          <div className="hero-telemetry-chips">
+            <div className="telemetry-chip">
+              <span className="chip-dot cyan"></span>
+              <span className="chip-label">TARGET:</span>
+              <strong className="chip-val">AMPK α-Subunit (Kd 1.8nM)</strong>
             </div>
-
-            {/* Icon 4: Molecule Target */}
-            <div className="quantum-float-icon icon-molecule" style={{ '--float-range': '14px', '--float-dur': '3.5s' }}>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="3" />
-                <circle cx="19" cy="5" r="2" />
-                <circle cx="5" cy="19" r="2" />
-                <circle cx="5" cy="5" r="2" />
-                <path d="M12 9V5" />
-                <path d="M14.5 13.5l3 3" />
-                <path d="M9.5 10.5l-3-3" />
-              </svg>
+            <div className="telemetry-chip">
+              <span className="chip-dot green"></span>
+              <span className="chip-label">VALIDATION:</span>
+              <strong className="chip-val">99.2% Grounded Quotes</strong>
             </div>
-
-            {/* Icon 5: Reticle Tactical */}
-            <div className="quantum-float-icon icon-reticle" style={{ '--float-range': '8px', '--float-dur': '2.0s' }}>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="22" y1="12" x2="18" y2="12" />
-                <line x1="6" y1="12" x2="2" y2="12" />
-                <line x1="12" y1="6" x2="12" y2="2" />
-                <line x1="12" y1="22" x2="12" y2="18" />
-              </svg>
+            <div className="telemetry-chip">
+              <span className="chip-dot purple"></span>
+              <span className="chip-label">REGULATORY:</span>
+              <strong className="chip-val">505(b)(2) Accelerated</strong>
             </div>
-
-            {/* Icon 6: Dumbbell Biometric */}
-            <div className="quantum-float-icon icon-dumbbell" style={{ '--float-range': '11px', '--float-dur': '2.6s' }}>
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00F0FF" strokeWidth="1.5">
-                <path d="m6.5 6.5 11 11" />
-                <path d="m21 21-1-1" />
-                <path d="m3 3 1 1" />
-                <path d="m18 22 4-4" />
-                <path d="m2 6 4-4" />
-                <path d="m3 10 7-7" />
-                <path d="m14 21 7-7" />
-              </svg>
+            <div className="telemetry-chip">
+              <span className="chip-dot amber"></span>
+              <span className="chip-label">SOURCES:</span>
+              <strong className="chip-val">PubMed + Europe PMC RRF</strong>
             </div>
           </div>
+
         </div>
 
-        <p className="hero-subtext">
-          Deep literature retrieval, multi-agent evidence synthesis, and high-throughput cellular pharmacophore modeling.
-        </p>
-
-        <div className="hero-cta-group">
-          <Link to="/analyzer" className="btn btn-primary">
-            [ INITIATE TARGET SCAN ]
-          </Link>
-          <Link to="/workspace" className="btn btn-secondary">
-            [ RESEARCH WORKSPACE ]
-          </Link>
-        </div>
-
-        {/* Bottom: Three-column stat strip with 48px bold mono numbers & glitch-hover */}
-        <div className="quantum-stat-strip glass-panel">
-          <div className="stat-col glitch-hover">
-            <div className="stat-number">4.5<span className="stat-unit">YRS</span></div>
-            <div className="stat-label">[ PRECLINICAL TIME ACCELERATED ]</div>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-col glitch-hover">
-            <div className="stat-number">94.8<span className="stat-unit">%</span></div>
-            <div className="stat-label">[ TOXICITY SAFETY RECOVERY MATCH ]</div>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-col glitch-hover">
-            <div className="stat-number">38.2<span className="stat-unit">M</span></div>
-            <div className="stat-label">[ INDEXED PUBMED & EUROPE PMC RECORDS ]</div>
+        {/* Hero Metrics Strip */}
+        <div className="container hero-metrics-wrap">
+          <div className="hero-metrics-grid glass-panel">
+            <div className="metric-col">
+              <div className="metric-val text-cyan">38.2M+</div>
+              <div className="metric-lbl">Indexed Biomedical Publications</div>
+            </div>
+            <div className="metric-divider"></div>
+            <div className="metric-col">
+              <div className="metric-val text-emerald">99.2%</div>
+              <div className="metric-lbl">Deterministic Citation Grounding</div>
+            </div>
+            <div className="metric-divider"></div>
+            <div className="metric-col">
+              <div className="metric-val text-cyan">84%</div>
+              <div className="metric-lbl">Preclinical Discovery Cycle Reduction</div>
+            </div>
+            <div className="metric-divider"></div>
+            <div className="metric-col">
+              <div className="metric-val text-cyan">&lt; 3.2s</div>
+              <div className="metric-lbl">Multi-Agent Literature Retrieval</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Scanner Interface (Viewfinder mockup + Control panel) */}
-      <section className="container scanner-section">
-        <div className="section-header-tag">
-          <span className="section-mini-badge red">LIVE ACQUISITION</span>
-          <h2>BIOMETRIC & PHARMACOPHORE SCANNER</h2>
-          <p>Real-time molecular target viewfinder and binding affinity calibration.</p>
+      {/* ===================================================================
+          2. INTERACTIVE TARGET SCANNER & DISCOVERY STUDIO
+          =================================================================== */}
+      <section className="container studio-section">
+        <div className="section-head-bar">
+          <span className="badge-pill">INTERACTIVE SIMULATION STUDIO</span>
+          <h2>BIOMOLECULAR TARGET & PHARMACOKINETIC SCANNER</h2>
+          <p>Inspect real-time target binding affinity, blood-brain barrier penetration, and peer-reviewed concordance for candidate drugs.</p>
         </div>
 
-        <div className="scanner-grid">
-          {/* Left: Viewfinder mockup with 3:4 aspect ratio */}
-          <div className="viewfinder-mockup glass-panel">
-            {/* Cyan corner crosshairs */}
-            <div className="crosshair top-left"></div>
-            <div className="crosshair top-right"></div>
-            <div className="crosshair bottom-left"></div>
-            <div className="crosshair bottom-right"></div>
+        {/* Compound Selector Tabs */}
+        <div className="compound-tabs-strip">
+          {SAMPLE_COMPOUNDS.map((c, idx) => (
+            <button
+              key={c.drug}
+              type="button"
+              className={`compound-tab-btn ${selectedDrugIndex === idx ? 'is-selected' : ''}`}
+              onClick={() => setSelectedDrugIndex(idx)}
+            >
+              <span className="tab-drug-name">{c.drug}</span>
+              <span className="tab-drug-arrow">→</span>
+              <span className="tab-drug-ind">{c.repurposedIndication}</span>
+            </button>
+          ))}
+        </div>
 
-            {/* Horizontal cyan laser line sliding top-to-bottom every 3s */}
-            {scanActive && <div className="cyan-laser-line"></div>}
-
-            {/* Pulsing red guide box with 'TARGET ACQUISITION FRAME' */}
-            <div className="pulsing-target-box">
-              <span className="target-frame-label">TARGET ACQUISITION FRAME</span>
-              <div className="reticle-center">
-                <span className="reticle-ring"></span>
-                <span className="reticle-dot"></span>
+        {/* 2-Column Scanner Console */}
+        <div className="studio-console-grid">
+          
+          {/* Left Column: Kinetic Molecular Viewfinder */}
+          <div className="viewfinder-terminal glass-panel">
+            
+            {/* Viewfinder Top Bar */}
+            <div className="viewfinder-top-bar">
+              <div className="vf-status-group">
+                <span className={`status-indicator-light ${isScanning ? 'pulse-green' : 'paused'}`}></span>
+                <span className="vf-channel-title">SPECTROMETRY PROBE // {activeDrug.drug.toUpperCase()}</span>
               </div>
-              <span className="target-status-caption">
-                {scanActive ? 'SCANNING CELLULAR PATHWAYS...' : 'ACQUISITION PAUSED'}
+              <div className="vf-meta-tags">
+                <span className="meta-badge">FOV: 0.12 Å</span>
+                <span className="meta-badge cyan">KINETICS: LIVE</span>
+              </div>
+            </div>
+
+            {/* Viewfinder Visual Screen */}
+            <div className="viewfinder-screen">
+              {/* Corner Crosshairs */}
+              <div className="vf-crosshair ch-tl">+</div>
+              <div className="vf-crosshair ch-tr">+</div>
+              <div className="vf-crosshair ch-bl">+</div>
+              <div className="vf-crosshair ch-br">+</div>
+
+              {/* Scanning Laser Line */}
+              {isScanning && <div className="scanning-laser"></div>}
+
+              {/* Central Molecular Diagram Visual */}
+              <div className="molecule-visual-box">
+                <svg viewBox="0 0 400 240" className="molecule-svg">
+                  {/* Grid Lines */}
+                  <line x1="20" y1="120" x2="380" y2="120" stroke="rgba(0, 229, 255, 0.12)" strokeDasharray="4 4" />
+                  <line x1="200" y1="20" x2="200" y2="220" stroke="rgba(0, 229, 255, 0.12)" strokeDasharray="4 4" />
+
+                  {/* Receptor Protein Cavity */}
+                  <path 
+                    d="M 60 70 Q 120 40 180 80 T 260 100 T 340 70" 
+                    fill="none" 
+                    stroke="rgba(139, 92, 246, 0.5)" 
+                    strokeWidth="3" 
+                  />
+                  <path 
+                    d="M 60 170 Q 130 190 200 160 T 340 170" 
+                    fill="none" 
+                    stroke="rgba(139, 92, 246, 0.5)" 
+                    strokeWidth="3" 
+                  />
+
+                  {/* Binding Cavity Glow */}
+                  <circle cx="200" cy="120" r="45" fill="rgba(0, 229, 255, 0.06)" stroke="rgba(0, 229, 255, 0.3)" strokeDasharray="3 3" />
+                  
+                  {/* Active Ligand (Molecule) */}
+                  <g className="ligand-group">
+                    <circle cx="170" cy="115" r="9" fill="#00E5FF" filter="drop-shadow(0 0 6px #00E5FF)" />
+                    <line x1="170" y1="115" x2="200" y2="105" stroke="#00E5FF" strokeWidth="2.5" />
+                    <circle cx="200" cy="105" r="7" fill="#10B981" filter="drop-shadow(0 0 6px #10B981)" />
+                    <line x1="200" y1="105" x2="228" y2="125" stroke="#00E5FF" strokeWidth="2.5" />
+                    <circle cx="228" cy="125" r="8" fill="#8B5CF6" filter="drop-shadow(0 0 6px #8B5CF6)" />
+                    <line x1="228" y1="125" x2="195" y2="140" stroke="#00E5FF" strokeWidth="2.5" />
+                    <circle cx="195" cy="140" r="7" fill="#00E5FF" />
+                    <line x1="195" y1="140" x2="170" y2="115" stroke="#00E5FF" strokeWidth="2" strokeDasharray="2 2" />
+                  </g>
+
+                  {/* Active Bond Distance Callout */}
+                  <text x="215" y="90" fill="#00E5FF" fontSize="10" fontFamily="var(--font-mono)">2.48 Å (H-BOND)</text>
+                  <text x="135" y="155" fill="#10B981" fontSize="10" fontFamily="var(--font-mono)">Kd = {activeDrug.kd}</text>
+                </svg>
+
+                {/* Overlaid Target Label */}
+                <div className="target-overlay-badge">
+                  <span className="mono-label">PRIMARY TARGET:</span>
+                  <strong>{activeDrug.target}</strong>
+                </div>
+              </div>
+
+              {/* Viewfinder Telemetry Readout Grid */}
+              <div className="vf-telemetry-row">
+                <div className="vf-tele-cell">
+                  <span className="cell-lbl">Kd AFFINITY</span>
+                  <span className="cell-val text-cyan">{activeDrug.kd}</span>
+                </div>
+                <div className="vf-tele-cell">
+                  <span className="cell-lbl">CONCORDANCE</span>
+                  <span className="cell-val text-emerald">{activeDrug.concordance}</span>
+                </div>
+                <div className="vf-tele-cell">
+                  <span className="cell-lbl">PHARMACOKINETICS</span>
+                  <span className="cell-val">{activeDrug.bbb}</span>
+                </div>
+                <div className="vf-tele-cell">
+                  <span className="cell-lbl">CLINICAL STAGE</span>
+                  <span className="cell-val text-cyan">{activeDrug.phase}</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Viewfinder Footer */}
+            <div className="viewfinder-footer-bar">
+              <span className="vf-mechanism-note">
+                <strong>MECHANISM:</strong> {activeDrug.mechanism}
               </span>
             </div>
 
-            {/* Telemetry readouts in JetBrains Mono */}
-            <div className="viewfinder-telemetry">
-              <span>FOV: 84.2° // SPECTRAL: 420nm</span>
-              <span>RESOL: 0.08 Å // AF: LOCKED</span>
-            </div>
           </div>
 
-          {/* Right: Control panel with dark-800 cards */}
-          <div className="scanner-control-panel glass-panel">
-            <div className="panel-title-bar">
-              <h4>INSTRUMENT TELEMETRY</h4>
-              <span className="badge-pill green">ONLINE</span>
+          {/* Right Column: Interactive Parameter Tuning & Action Console */}
+          <div className="studio-control-card glass-panel">
+            <div className="control-card-head">
+              <h4>STUDIO PARAMETER TUNING</h4>
+              <span className="badge-pill green">CALIBRATED</span>
             </div>
 
-            {/* Slider 1: Target Sensitivity */}
-            <div className="control-card">
-              <div className="slider-label-row">
-                <span className="control-name">TARGET SENSITIVITY</span>
-                <span className="control-val">{sensitivity}%</span>
+            {/* Slider 1: Evidence Consensus */}
+            <div className="tune-slider-block">
+              <div className="slider-header-row">
+                <span className="slider-title">MINIMUM CONSENSUS THRESHOLD</span>
+                <span className="slider-val text-cyan">{evidenceThreshold}%</span>
               </div>
               <input 
                 type="range" 
-                min="10" 
-                max="100" 
-                value={sensitivity} 
-                onChange={e => setSensitivity(e.target.value)} 
+                min="50" 
+                max="99" 
+                value={evidenceThreshold} 
+                onChange={e => setEvidenceThreshold(Number(e.target.value))} 
               />
+              <span className="slider-hint">Filters out low-confidence hypotheses lacking multi-paper concordant findings.</span>
             </div>
 
-            {/* Slider 2: Kd Affinity Threshold */}
-            <div className="control-card">
-              <div className="slider-label-row">
-                <span className="control-name">Kd BINDING THRESHOLD</span>
-                <span className="control-val">{kdThreshold} nM</span>
+            {/* Slider 2: Kd Affinity Stringency */}
+            <div className="tune-slider-block">
+              <div className="slider-header-row">
+                <span className="slider-title">Kd AFFINITY STRINGENCY CUTOFF</span>
+                <span className="slider-val text-cyan">&le; {kdThreshold} nM</span>
               </div>
               <input 
                 type="range" 
                 min="1" 
                 max="100" 
                 value={kdThreshold} 
-                onChange={e => setKdThreshold(e.target.value)} 
+                onChange={e => setKdThreshold(Number(e.target.value))} 
               />
+              <span className="slider-hint">Restricts molecular targets to nanomolar therapeutic concentrations.</span>
             </div>
 
-            {/* Button Group (START/STOP) */}
-            <div className="control-actions-group">
+            {/* Status Breakdown Box */}
+            <div className="studio-status-box">
+              <div className="status-item-row">
+                <span className="status-k">PubMed & Europe PMC Papers:</span>
+                <span className="status-v">{activeDrug.pmidCount} publications analyzed</span>
+              </div>
+              <div className="status-item-row">
+                <span className="status-k">Original Indication:</span>
+                <span className="status-v">{activeDrug.originalIndication}</span>
+              </div>
+              <div className="status-item-row">
+                <span className="status-k">Repurposing Candidate:</span>
+                <span className="status-v text-cyan">{activeDrug.repurposedIndication}</span>
+              </div>
+              <div className="status-item-row">
+                <span className="status-k">505(b)(2) Regulatory Feasibility:</span>
+                <span className="status-v text-emerald">High (Accelerated Exemption)</span>
+              </div>
+            </div>
+
+            {/* Button Actions */}
+            <div className="studio-buttons-row">
               <button 
                 type="button" 
-                className={`btn ${scanActive ? 'btn-secondary' : 'btn-primary'}`}
-                onClick={() => setScanActive(!scanActive)}
+                className="btn btn-secondary"
+                onClick={() => setIsScanning(!isScanning)}
               >
-                {scanActive ? '[ PAUSE SCANNER ]' : '[ ACTIVATE SCAN ]'}
+                {isScanning ? 'Pause Probe' : 'Resume Probe'}
               </button>
-              <Link to="/analyzer" className="btn btn-primary">
-                [ RUN AGENT ANALYSIS ]
+              <Link 
+                to={`/analyzer?mode=database`} 
+                className="btn btn-primary"
+              >
+                <span>Analyze in Full Suite</span>
+                <span aria-hidden="true">→</span>
               </Link>
             </div>
 
-            <div className="telemetry-info-box">
-              <span className="mono-label">ACTIVE PROBE: METFORMIN α-AMPK</span>
-              <p>Calibrated against human plasma pharmacokinetic models with automated 505(b)(2) fast-track verification.</p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ===================================================================
+          3. FOUR-TIER MULTI-AGENT ARCHITECTURE
+          =================================================================== */}
+      <section className="container workflow-section">
+        <div className="section-head-bar">
+          <span className="badge-pill">AGENTIC WORKFLOW PIPELINE</span>
+          <h2>FOUR-TIER COGNITIVE DISCOVERY ENGINE</h2>
+          <p>Every hypothesis is synthesized, audited, and verified by dedicated autonomous agents with zero hallucinations.</p>
+        </div>
+
+        <div className="workflow-cards-grid">
+          
+          {/* Tier 1 */}
+          <div className="workflow-card glass-panel">
+            <div className="wf-card-top">
+              <span className="wf-step-number">01</span>
+              <div className="wf-icon-box cyan-glow">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#00E5FF" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </div>
+            </div>
+            <h3>Hybrid Retrieval Agent</h3>
+            <p>Concurrently executes Boolean searches across PubMed and Europe PMC, merging keyword BM25 with Reciprocal Rank Fusion (RRF) to score top clinical papers.</p>
+            <div className="wf-footer-tag">
+              <span className="mono-label">PUBMED + EUROPE PMC</span>
+            </div>
+          </div>
+
+          {/* Tier 2 */}
+          <div className="workflow-card glass-panel">
+            <div className="wf-card-top">
+              <span className="wf-step-number">02</span>
+              <div className="wf-icon-box purple-glow">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#8B5CF6" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+              </div>
+            </div>
+            <h3>Claim & Evidence Miner</h3>
+            <p>Extracts structured pharmacological claims, targeted proteins, cellular models, and verbatim source passages with exact publication citations.</p>
+            <div className="wf-footer-tag">
+              <span className="mono-label">VERBATIM PASSAGE MAPPING</span>
+            </div>
+          </div>
+
+          {/* Tier 3 */}
+          <div className="workflow-card glass-panel">
+            <div className="wf-card-top">
+              <span className="wf-step-number">03</span>
+              <div className="wf-icon-box emerald-glow">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#10B981" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+            </div>
+            <h3>Deterministic Verifier</h3>
+            <p>Audits claims against cited quotes using deterministic lexical validation. Separates concordant vs discordant evidence and highlights open research gaps.</p>
+            <div className="wf-footer-tag">
+              <span className="mono-label">ZERO HALLUCINATIONS</span>
+            </div>
+          </div>
+
+          {/* Tier 4 */}
+          <div className="workflow-card glass-panel">
+            <div className="wf-card-top">
+              <span className="wf-step-number">04</span>
+              <div className="wf-icon-box cyan-glow">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#00E5FF" strokeWidth="2">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg>
+              </div>
+            </div>
+            <h3>Dossier & Protocol Engine</h3>
+            <p>Compiles structured monographs with exploratory Phase IIa clinical protocols, dosing schedules, and exportable regulatory briefs in Markdown and PDF.</p>
+            <div className="wf-footer-tag">
+              <span className="mono-label">FDA 505(b)(2) READY</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ===================================================================
+          4. INTERACTIVE PLATFORM HUB
+          =================================================================== */}
+      <section className="container hub-preview-section">
+        <div className="hub-preview-card glass-panel">
+          <div className="hub-grid">
+            <div className="hub-copy">
+              <span className="badge-pill green">COMPLETE SCIENTIFIC SUITE</span>
+              <h2>ALL RESEARCH CAPABILITIES AT YOUR FINGERTIPS</h2>
+              <p>Explore the full suite of bioinformatics modules built for oncology, neurodegenerative diseases, and rare disorders.</p>
+              
+              <div className="hub-features-list">
+                <div className="hub-feat-item">
+                  <strong className="text-cyan">Evidence Matrix:</strong>
+                  <span>Interactive claim auditing with verbatim quote inspection and concordance sorting.</span>
+                </div>
+                <div className="hub-feat-item">
+                  <strong className="text-cyan">Biomolecular Graph:</strong>
+                  <span>SVG force-directed network mapping drugs to molecular targets and pathway nodes.</span>
+                </div>
+                <div className="hub-feat-item">
+                  <strong className="text-cyan">Citation Research Chat:</strong>
+                  <span>Ask deep scientific questions grounded strictly in indexed literature papers.</span>
+                </div>
+              </div>
+
+              <div className="hub-cta-buttons">
+                <Link to="/workspace" className="btn btn-primary">Open Research Workspace</Link>
+                <Link to="/analyzer?mode=pdf" className="btn btn-outline">Analyze Lab PDF Document</Link>
+              </div>
+            </div>
+
+            <div className="hub-visual-box">
+              <div className="terminal-window">
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <span className="terminal-title">neuro-agent --pipeline=autonomous</span>
+                </div>
+                <div className="terminal-body mono-data">
+                  <p><span className="t-cyan">&gt;</span> Initializing PubMed API &amp; Europe PMC cluster...</p>
+                  <p><span className="t-green">&#10003;</span> 42 records retrieved for Metformin + Glioblastoma</p>
+                  <p><span className="t-cyan">&gt;</span> Running BM25 + Reciprocal Rank Fusion reranker...</p>
+                  <p><span className="t-green">&#10003;</span> Target AMPK identified with Kd = 1.8 nM (p &lt; 0.001)</p>
+                  <p><span className="t-cyan">&gt;</span> Deterministic Verifier auditing 16 extracted claims...</p>
+                  <p><span className="t-green">&#10003;</span> 15 Concordant assertions verified with verbatim quotes</p>
+                  <p><span className="t-amber">&#9888;</span> 1 Preclinical Discordance noted (in vitro only, lack in vivo model)</p>
+                  <p><span className="t-purple">&gt;</span> Generating Phase IIa Clinical Protocol monograph...</p>
+                  <p className="t-cyan"><b>[STATUS: READY FOR AUDIT &amp; EXPORT]</b></p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Process Section (4-column grid of cards) */}
-      <section className="container process-section">
-        <div className="section-header-tag">
-          <span className="section-mini-badge">WORKFLOW PIPELINE</span>
-          <h2>FOUR-TIER COGNITIVE DISCOVERY</h2>
-          <p>Multi-agent research architecture converting raw biomedical papers into auditable repurposing hypotheses.</p>
-        </div>
-
-        <div className="process-grid">
-          
-          {/* Card 01 */}
-          <div className="process-card glass-panel">
-            <span className="bg-large-number">01</span>
-            <div className="process-icon-box">🔍</div>
-            <h4>Hybrid Retrieval</h4>
-            <p>Queries PubMed and Europe PMC concurrently, merging keyword BM25 with Reciprocal Rank Fusion.</p>
+      {/* ===================================================================
+          5. FAQ & REGULATORY SCOPE SECTION
+          =================================================================== */}
+      <section className="container faq-section">
+        <div className="faq-layout">
+          <div className="faq-intro">
+            <span className="badge-pill">SCIENTIFIC RIGOR &amp; METHODOLOGY</span>
+            <h2>FREQUENTLY ASKED QUESTIONS</h2>
+            <p>Essential guidance on literature coverage, PDF extraction, deterministic audits, and regulatory scope.</p>
+            <Link to="/about" className="btn btn-outline btn-sm" style={{ marginTop: '1rem' }}>
+              Read Full Methodology &rarr;
+            </Link>
           </div>
 
-          {/* Card 02 */}
-          <div className="process-card glass-panel">
-            <span className="bg-large-number">02</span>
-            <div className="process-icon-box">📑</div>
-            <h4>Evidence Mining</h4>
-            <p>Extracts molecular targets, study models, and verbatim text passages into claim-level citations.</p>
+          <div className="faq-accordion">
+            {FAQ_ITEMS.map((item, index) => {
+              const isOpen = activeFaq === index
+              return (
+                <div 
+                  key={item.q} 
+                  className={`faq-panel glass-panel ${isOpen ? 'is-open' : ''}`}
+                >
+                  <button 
+                    type="button" 
+                    className="faq-toggle-btn"
+                    onClick={() => setActiveFaq(isOpen ? -1 : index)}
+                  >
+                    <span className="faq-q-text">{item.q}</span>
+                    <span className="faq-indicator">{isOpen ? '−' : '+'}</span>
+                  </button>
+                  {isOpen && (
+                    <div className="faq-answer-body">
+                      <p>{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
-
-          {/* Card 03 */}
-          <div className="process-card glass-panel">
-            <span className="bg-large-number">03</span>
-            <div className="process-icon-box">⚖️</div>
-            <h4>Claim Verification</h4>
-            <p>Deterministic and lexical auditing checks whether claims are strictly substantiated by cited quotes.</p>
-          </div>
-
-          {/* Card 04 */}
-          <div className="process-card glass-panel">
-            <span className="bg-large-number">04</span>
-            <div className="process-icon-box">📄</div>
-            <h4>Monograph Export</h4>
-            <p>Compiles auditable research reports with exploratory Phase IIa clinical protocols in Markdown and PDF.</p>
-          </div>
-
         </div>
       </section>
+
+      {/* Scientific Caveat Footer Banner */}
+      <div className="container" style={{ marginTop: '4rem', marginBottom: '2rem' }}>
+        <div className="disclosure-banner glass-panel">
+          <div className="banner-icon-side">⚖️</div>
+          <div className="banner-text-side">
+            <strong>RESEARCH EXPLORATION INSTRUMENT · NOT CLINICAL ADVICE</strong>
+            <p>NeuroRepurpose AI is designed to assist biomedical researchers and regulatory teams in formulating hypotheses. All AI-generated outputs and citations must be validated against original primary publications and subject to standard laboratory and clinical protocols.</p>
+          </div>
+        </div>
+      </div>
 
     </div>
   )

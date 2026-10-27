@@ -6,7 +6,7 @@
 
 .main-content {
   flex: 1;
-  padding-top: 80px; /* Offset fixed 80px header */
+  padding-top: 72px; /* Offset fixed 72px header */
 }
 
 .route-loading {
@@ -16,7 +16,7 @@
   min-height: 60vh;
   font-family: var(--font-mono);
   font-size: 0.9rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-primary);
   text-transform: uppercase;
 }

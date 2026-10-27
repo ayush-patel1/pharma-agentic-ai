@@ -5,68 +5,74 @@ export default function Navbar() {
   const location = useLocation()
   
   return (
-    <nav className="navbar">
+    <nav className="quantum-navbar">
       <div className="container navbar-content">
+        
+        {/* Left: Logo with rotating military reticle icon */}
         <Link to="/" className="navbar-brand">
-          <div className="brand-icon" aria-hidden="true">
-            <span className="brand-shape brand-circle" />
-            <span className="brand-shape brand-square" />
-            <span className="brand-shape brand-triangle" />
+          <div className="reticle-icon-box" aria-hidden="true">
+            <svg className="rotating-reticle" viewBox="0 0 40 40" width="32" height="32">
+              <circle cx="20" cy="20" r="16" fill="none" stroke="#00F0FF" strokeWidth="1.5" strokeDasharray="6 4" />
+              <circle cx="20" cy="20" r="9" fill="none" stroke="#00F0FF" strokeWidth="1" />
+              <line x1="20" y1="2" x2="20" y2="10" stroke="#00F0FF" strokeWidth="2" />
+              <line x1="20" y1="30" x2="20" y2="38" stroke="#00F0FF" strokeWidth="2" />
+              <line x1="2" y1="20" x2="10" y2="20" stroke="#00F0FF" strokeWidth="2" />
+              <line x1="30" y1="20" x2="38" y2="20" stroke="#00F0FF" strokeWidth="2" />
+              <circle cx="20" cy="20" r="2.5" fill="#FF2A2A" />
+            </svg>
           </div>
           <div className="brand-text">
-            <span className="brand-name">NeuroRepurpose AI</span>
-            <span className="brand-tagline">Biomedical Intelligence Suite</span>
+            <span className="brand-title">NEURO<span className="text-cyan-glow">QUANTUM</span></span>
+            <span className="brand-subtitle">[ BIOMETRIC RESEARCH ]</span>
           </div>
         </Link>
         
+        {/* Center: Nav links in JetBrains Mono wrapped in [ LINK ] */}
         <div className="navbar-links">
           <Link 
             to="/workspace" 
-            className={`nav-link ${location.pathname === '/workspace' ? 'active' : ''}`}
+            className={`quantum-nav-link ${location.pathname === '/workspace' ? 'active' : ''}`}
           >
-            Workspace
+            [ WORKSPACE ]
           </Link>
           <Link 
             to="/analyzer" 
-            className={`nav-link ${location.pathname === '/analyzer' ? 'active' : ''}`}
+            className={`quantum-nav-link ${location.pathname === '/analyzer' ? 'active' : ''}`}
           >
-            Analyzer
+            [ ANALYZER ]
           </Link>
           <Link 
             to="/evidence" 
-            className={`nav-link ${location.pathname === '/evidence' ? 'active' : ''}`}
+            className={`quantum-nav-link ${location.pathname === '/evidence' ? 'active' : ''}`}
           >
-            Evidence Explorer
+            [ EVIDENCE ]
           </Link>
           <Link 
             to="/chat" 
-            className={`nav-link ${location.pathname === '/chat' ? 'active' : ''}`}
+            className={`quantum-nav-link ${location.pathname === '/chat' ? 'active' : ''}`}
           >
-            Research Chat
+            [ CHATBOT ]
           </Link>
           <Link 
             to="/graph" 
-            className={`nav-link ${location.pathname === '/graph' ? 'active' : ''}`}
+            className={`quantum-nav-link ${location.pathname === '/graph' ? 'active' : ''}`}
           >
-            Target Graph
+            [ TARGET GRAPH ]
           </Link>
           <Link 
             to="/reports" 
-            className={`nav-link ${location.pathname === '/reports' ? 'active' : ''}`}
+            className={`quantum-nav-link ${location.pathname === '/reports' ? 'active' : ''}`}
           >
-            Reports
-          </Link>
-          <Link 
-            to="/about" 
-            className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
-          >
-            Methodology
+            [ REPORTS ]
           </Link>
         </div>
         
-        <Link to="/analyzer" className="btn btn-primary nav-cta-btn">
-          🔬 Launch Analysis
-        </Link>
+        {/* Right: Small cyber-cut button in cyan */}
+        <div className="navbar-actions">
+          <Link to="/analyzer" className="btn btn-primary btn-sm cyber-btn-nav">
+            [ INITIATE SCAN ]
+          </Link>
+        </div>
       </div>
     </nav>
   )

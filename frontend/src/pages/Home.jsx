@@ -125,27 +125,23 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Floating Telemetry Chips */}
-          <div className="hero-telemetry-chips">
-            <div className="telemetry-chip">
-              <span className="chip-dot cyan"></span>
-              <span className="chip-label">TARGET:</span>
-              <strong className="chip-val">AMPK α-Subunit (Kd 1.8nM)</strong>
+          {/* Stat pills row */}
+          <div className="hero-stats-row" role="list" aria-label="Platform statistics">
+            <div className="stat-pill" role="listitem">
+              <span className="stat-pill-value">38M+</span>
+              <span className="stat-pill-label">Papers Indexed</span>
             </div>
-            <div className="telemetry-chip">
-              <span className="chip-dot green"></span>
-              <span className="chip-label">VALIDATION:</span>
-              <strong className="chip-val">99.2% Grounded Quotes</strong>
+            <div className="stat-pill" role="listitem">
+              <span className="stat-pill-value">99.2%</span>
+              <span className="stat-pill-label">Citation Grounding</span>
             </div>
-            <div className="telemetry-chip">
-              <span className="chip-dot purple"></span>
-              <span className="chip-label">REGULATORY:</span>
-              <strong className="chip-val">505(b)(2) Accelerated</strong>
+            <div className="stat-pill" role="listitem">
+              <span className="stat-pill-value">7-Node</span>
+              <span className="stat-pill-label">Agent Pipeline</span>
             </div>
-            <div className="telemetry-chip">
-              <span className="chip-dot amber"></span>
-              <span className="chip-label">SOURCES:</span>
-              <strong className="chip-val">PubMed + Europe PMC RRF</strong>
+            <div className="stat-pill" role="listitem">
+              <span className="stat-pill-value">&lt;3s</span>
+              <span className="stat-pill-label">Retrieval Speed</span>
             </div>
           </div>
 

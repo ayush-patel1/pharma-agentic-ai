@@ -1,14 +1,35 @@
 /* ==========================================================================
-   NAVBAR COMPONENT STYLES
+   NAVBAR COMPONENT — Glassmorphism SaaS Design
    ========================================================================== */
 
+/* Skip link (global, defined here for proximity) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Navbar shell */
 .site-navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 72px;
-  background: rgba(6, 8, 15, 0.85);
+  background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -31,18 +52,27 @@
   gap: 0.85rem;
   text-decoration: none;
   cursor: pointer;
+  flex-shrink: 0;
+}
+
+.navbar-brand:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
 .brand-logo-mark {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .brand-svg {
-  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.4));
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.45));
 }
 
+/* SVG animations */
 @keyframes orbitSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -55,14 +85,14 @@
 
 @keyframes corePulseGlow {
   0%, 100% {
+    filter: drop-shadow(0 0 4px #3B82F6);
     transform-origin: 18px 18px;
     transform: scale(0.9);
-    filter: drop-shadow(0 0 4px #00E5FF);
   }
   50% {
+    filter: drop-shadow(0 0 10px #3B82F6);
     transform-origin: 18px 18px;
     transform: scale(1.15);
-    filter: drop-shadow(0 0 10px #00E5FF);
   }
 }
 
@@ -70,6 +100,7 @@
   animation: corePulseGlow 2.5s ease-in-out infinite;
 }
 
+/* Brand text */
 .brand-text-block {
   display: flex;
   flex-direction: column;
@@ -82,26 +113,25 @@
 }
 
 .brand-name {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #FFFFFF;
+  color: var(--color-text-primary);
   line-height: 1.1;
 }
 
 .brand-highlight {
-  color: var(--color-primary);
-  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+  color: var(--color-secondary);
 }
 
 .brand-version-tag {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.625rem;
   font-weight: 700;
-  color: var(--color-primary);
-  background: rgba(0, 229, 255, 0.1);
-  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--color-secondary);
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: var(--radius-xs);
   padding: 0.1rem 0.35rem;
   letter-spacing: 0.05em;
@@ -109,17 +139,17 @@
 
 .brand-sub {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
-/* Nav Links */
+/* Nav links */
 .navbar-nav-links {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .nav-menu-link {
@@ -135,39 +165,55 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
+  min-height: 44px;
+  justify-content: center;
 }
 
 .nav-menu-link:hover {
-  color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-menu-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .nav-menu-link.is-active {
   color: var(--color-primary);
   font-weight: 600;
-  background: rgba(0, 229, 255, 0.06);
+  background: rgba(59, 130, 246, 0.08);
 }
 
 .nav-active-indicator {
   position: absolute;
-  bottom: 0px;
+  bottom: 2px;
   width: 20px;
   height: 2px;
   background: var(--color-primary);
   border-radius: 2px;
-  box-shadow: 0 0 8px var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary-glow);
 }
 
-/* Right Actions */
+/* Right actions */
 .navbar-right-actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
 }
 
-@media (max-width: 1080px) {
+/* CTA button override — arrow icon */
+.navbar-right-actions .btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
   .navbar-nav-links {
-    gap: 0.2rem;
+    gap: 0;
   }
   .nav-menu-link {
     font-size: 0.8125rem;
@@ -177,6 +223,6 @@
 
 @media (max-width: 900px) {
   .navbar-nav-links {
-    display: none; /* Mobile navigation simplified */
+    display: none;
   }
 }

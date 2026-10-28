@@ -4,6 +4,19 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import './App.css'
 import './design-system.css'
+
+// Load every route stylesheet before the shared theme. This prevents lazy-loaded
+// page CSS from changing colors, surfaces, or typography partway down a page.
+import './pages/Home.css'
+import './pages/About.css'
+import './pages/Workspace.css'
+import './pages/Analyzer.css'
+import './pages/EvidenceExplorer.css'
+import './pages/ResearchChat.css'
+import './pages/KnowledgeGraph.css'
+import './pages/ReportsPage.css'
+
+// Keep this last: it is the single source of truth for visual tokens and surfaces.
 import './clay-theme.css'
 
 const Home = lazy(() => import('./pages/Home'))

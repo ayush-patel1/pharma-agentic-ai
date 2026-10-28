@@ -395,3 +395,95 @@ button:focus-visible, a:focus-visible, [role="button"]:focus-visible {
   .brief-evidence-item { grid-template-columns: 26px minmax(0,1fr); }
   .evidence-step-state { display: none; }
 }
+
+
+/* Final cascade audit: legacy sections that previously reintroduced the old
+   navy/blue or high-contrast yellow/red theme lower down the page. */
+.studio-section, .workflow-section, .faq-section, .hero-metrics-wrap,
+.method-hero, .method-sources, .method-workflow, .method-limits, .method-action,
+.home-container > section:not(.research-hero) {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--dp-color-ink) !important;
+}
+.home-container .studio-control-card,
+.home-container .studio-status-box,
+.home-container .hub-preview-card,
+.home-container .feature-card,
+.home-container .platform-card,
+.home-container .terminal-window,
+.home-container .terminal-card,
+.home-container .terminal-header,
+.home-container .viewfinder-footer-bar,
+.home-container .viewfinder-screen,
+.home-container .terminal-logs-screen,
+.home-container .cta-banner-inner,
+.about-page .agent-node-card,
+.about-page .method-source,
+.about-page .method-source-blue,
+.about-page .method-source-yellow,
+.analyzer-page .report-paper-container,
+.analyzer-page .scientific-report-sheet,
+.analyzer-page .scientific-report-sheet th,
+.analyzer-page .scientific-report-sheet td {
+  color: var(--dp-color-ink) !important;
+  border-color: #e2dce6 !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+.home-container .studio-control-card,
+.home-container .studio-status-box,
+.home-container .hub-preview-card,
+.home-container .feature-card,
+.home-container .platform-card,
+.home-container .terminal-window,
+.home-container .terminal-card,
+.home-container .viewfinder-screen,
+.home-container .terminal-logs-screen,
+.about-page .agent-node-card,
+.analyzer-page .scientific-report-sheet {
+  background: var(--dp-color-surface) !important;
+  background-image: none !important;
+  border-radius: 28px !important;
+}
+.home-container .terminal-header,
+.home-container .viewfinder-footer-bar,
+.analyzer-page .scientific-report-sheet th {
+  background: var(--dp-color-surface-compare) !important;
+}
+.home-container .cta-banner-inner {
+  background: var(--dp-color-accent) !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 38px !important;
+}
+.home-container .terminal-window pre,
+.home-container .terminal-window code,
+.home-container .terminal-logs-screen *,
+.home-container .viewfinder-screen *,
+.analyzer-page .scientific-report-sheet *,
+.about-page .agent-node-card * {
+  color: var(--dp-color-ink-secondary) !important;
+  text-shadow: none !important;
+}
+.home-container .terminal-dots span:nth-child(1) { background: #d86e78 !important; }
+.home-container .terminal-dots span:nth-child(2) { background: #d9ad45 !important; }
+.home-container .terminal-dots span:nth-child(3) { background: #6cae8d !important; }
+.about-page .method-source-blue { background: var(--dp-color-surface-cool) !important; }
+.about-page .method-source-yellow { background: var(--dp-color-surface-warm) !important; }
+.about-page .method-limits-inner { background: var(--dp-color-surface-warm) !important; }
+.about-page .method-action .btn { background: #78527e !important; color: #fffdf7 !important; }
+.analyzer-page .report-paper-container { background: transparent !important; }
+.analyzer-page .scientific-report-sheet tr:hover { background: #f5f0fb !important; }
+
+/* Route page shells must not introduce their own vertical color bands. */
+.workspace-page, .analyzer-page, .evidence-page, .chat-page,
+.graph-page, .reports-page, .about-page, .home-container {
+  background: var(--dp-color-ground) !important;
+  background-image: none !important;
+}
+.chat-page { min-height: calc(100vh - 72px); height: auto !important; }
+.chat-container { min-height: min(720px, calc(100vh - 170px)); height: auto !important; }
+@media (max-width: 760px) {
+  .chat-page { min-height: auto; }
+  .chat-container { min-height: 65vh; grid-template-columns: minmax(0, 1fr) !important; }
+}

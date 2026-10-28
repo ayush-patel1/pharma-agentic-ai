@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import './App.css'
+import './design-system.css'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
@@ -18,7 +19,7 @@ export default function App() {
     <BrowserRouter>
       <div className="app">
         <Navbar />
-        <main className="main-content">
+        <main id="main-content" className="main-content">
           <Suspense fallback={<div className="route-loading" role="status">Loading workspace…</div>}>
             <Routes>
               <Route path="/" element={<Home />} />

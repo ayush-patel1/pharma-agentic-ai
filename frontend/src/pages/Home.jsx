@@ -64,7 +64,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'How does this accelerate the FDA 505(b)(2) regulatory pathway?',
-    a: 'Because repurposed drugs already have established human safety and toxicology profiles, researchers can leverage existing data under FDA 505(b)(2). Our platform synthesizes off-label preclinical evidence directly into structured regulatory dossiers, cutting early discovery from 4+ years to weeks.'
+    a: 'Because repurposed drugs already have established human safety and toxicology profiles, researchers can leverage existing data under FDA 505(b)(2). Our platform synthesizes off-label preclinical evidence directly into structured regulatory dossiers, supporting earlier-stage research synthesis.'
   },
   {
     q: 'Can researchers upload and analyze their own unpublished PDFs?',
@@ -87,89 +87,101 @@ export default function Home() {
       {/* ===================================================================
           1. HERO SECTION
           =================================================================== */}
-      <section className="hero-section">
-        <div className="container hero-content">
-          
-          {/* Status Badge */}
-          <div className="hero-status-pill">
-            <span className="pulse-radar-dot" aria-hidden="true"></span>
-            <span className="pill-text">AUTONOMOUS MULTI-AGENT DRUG REPURPOSING</span>
-            <span className="pill-sep">•</span>
-            <span className="pill-badge">FDA 505(b)(2) FAST-TRACK ENGINE</span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="hero-main-title">
-            <span className="hero-title-line-1">ACCELERATING DRUG REPURPOSING</span>
-            <span className="hero-title-line-2">WITH AGENTIC BIOMEDICAL AI</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="hero-description">
-            Synthesize 38M+ biomedical records from PubMed and Europe PMC into auditable, 
-            mechanistically verified repurposing hypotheses. Deterministically audit molecular target affinities, 
-            detect preclinical research gaps, and export FDA-ready trial monographs in minutes.
-          </p>
-
-          {/* Action CTAs */}
-          <div className="hero-actions-row">
-            <Link to="/analyzer" className="btn btn-primary btn-lg">
-              <span>Launch Drug Analyzer</span>
-              <span aria-hidden="true">↗</span>
-            </Link>
-            <Link to="/evidence" className="btn btn-secondary btn-lg">
-              <span>Explore Evidence Matrix</span>
-            </Link>
-            <Link to="/chat" className="btn btn-outline btn-lg">
-              <span>Research Agent Chat</span>
-            </Link>
-          </div>
-
-          {/* Stat pills row */}
-          <div className="hero-stats-row" role="list" aria-label="Platform statistics">
-            <div className="stat-pill" role="listitem">
-              <span className="stat-pill-value">38M+</span>
-              <span className="stat-pill-label">Papers Indexed</span>
+      <section className="hero-section research-hero">
+        <div className="container hero-content research-hero-grid">
+          <div className="research-hero-copy">
+            <div className="hero-status-pill research-kicker">
+              <span className="pulse-radar-dot" aria-hidden="true"></span>
+              <span className="pill-text">NEUROREPURPOSE AI</span>
+              <span className="pill-sep">/</span>
+              <span className="pill-badge">BIOMEDICAL EVIDENCE WORKBENCH</span>
             </div>
-            <div className="stat-pill" role="listitem">
-              <span className="stat-pill-value">99.2%</span>
-              <span className="stat-pill-label">Citation Grounding</span>
+            <h1 className="hero-main-title">
+              <span className="hero-title-line-1">Find new possibilities</span>
+              <span className="hero-title-line-2">in existing medicines.</span>
+            </h1>
+            <p className="hero-description">
+              Explore drug-repurposing hypotheses across biomedical literature. Follow each finding back to its source, compare evidence across studies, and inspect the molecular targets behind a potential connection.
+            </p>
+            <div className="hero-actions-row">
+              <Link to="/analyzer" className="btn btn-primary btn-lg">
+                <span>Start an investigation</span><span aria-hidden="true">↗</span>
+              </Link>
+              <Link to="/evidence" className="btn btn-secondary btn-lg">
+                <span>Inspect the evidence</span>
+              </Link>
             </div>
-            <div className="stat-pill" role="listitem">
-              <span className="stat-pill-value">7-Node</span>
-              <span className="stat-pill-label">Agent Pipeline</span>
-            </div>
-            <div className="stat-pill" role="listitem">
-              <span className="stat-pill-value">&lt;3s</span>
-              <span className="stat-pill-label">Retrieval Speed</span>
+            <div className="research-source-line">
+              <span className="source-line-mark" aria-hidden="true"></span>
+              <span>PubMed + Europe PMC</span>
+              <span className="source-line-divider">·</span>
+              <span>Claim-level citations</span>
+              <span className="source-line-divider">·</span>
+              <span>Exportable research reports</span>
             </div>
           </div>
-
+          <aside className="research-hero-visual" aria-label="Illustrative drug repurposing evidence brief">
+            <div className="evidence-brief-top">
+              <div>
+                <span className="brief-overline">EXAMPLE RESEARCH LEAD</span>
+                <span className="brief-id">NR / BRIEF 001</span>
+              </div>
+              <span className="brief-status">Illustrative</span>
+            </div>
+            <div className="brief-compound-row">
+              <div className="compound-monogram" aria-hidden="true">M</div>
+              <div className="brief-compound-name">
+                <strong>Metformin</strong>
+                <span>Established indication · Type 2 diabetes</span>
+              </div>
+            </div>
+            <div className="brief-connection" aria-hidden="true">
+              <span></span><span className="connection-node"></span><span></span>
+              <span className="connection-label">repurposing hypothesis</span>
+            </div>
+            <div className="brief-target-row">
+              <div className="target-glyph" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="17" stroke="currentColor" strokeWidth="1.4"/>
+                  <circle cx="24" cy="24" r="9" stroke="currentColor" strokeWidth="1.4" strokeDasharray="3 3"/>
+                  <circle cx="24" cy="24" r="3" fill="currentColor"/>
+                  <path d="M24 2v8M24 38v8M2 24h8M38 24h8" stroke="currentColor" strokeWidth="1.4"/>
+                </svg>
+              </div>
+              <div className="brief-compound-name">
+                <strong>Glioblastoma</strong>
+                <span>Candidate indication to investigate</span>
+              </div>
+              <span className="brief-arrow" aria-hidden="true">↗</span>
+            </div>
+            <div className="brief-evidence-divider"></div>
+            <div className="brief-evidence-heading">
+              <span>Evidence trail</span><span>3 review stages</span>
+            </div>
+            <div className="brief-evidence-list">
+              <div className="brief-evidence-item">
+                <span className="evidence-step-icon">01</span>
+                <span><strong>Retrieve</strong><small>Find relevant papers across sources</small></span>
+                <span className="evidence-step-state">Search</span>
+              </div>
+              <div className="brief-evidence-item">
+                <span className="evidence-step-icon">02</span>
+                <span><strong>Compare</strong><small>Review mechanisms and study context</small></span>
+                <span className="evidence-step-state">Review</span>
+              </div>
+              <div className="brief-evidence-item">
+                <span className="evidence-step-icon">03</span>
+                <span><strong>Verify</strong><small>Inspect claims against source passages</small></span>
+                <span className="evidence-step-state">Audit</span>
+              </div>
+            </div>
+            <p className="brief-disclaimer">Illustrative example only. Not a validated finding or treatment recommendation.</p>
+          </aside>
         </div>
-
-        {/* Hero Metrics Strip */}
-        <div className="container hero-metrics-wrap">
-          <div className="hero-metrics-grid glass-panel">
-            <div className="metric-col">
-              <div className="metric-val text-cyan">38.2M+</div>
-              <div className="metric-lbl">Indexed Biomedical Publications</div>
-            </div>
-            <div className="metric-divider"></div>
-            <div className="metric-col">
-              <div className="metric-val text-emerald">99.2%</div>
-              <div className="metric-lbl">Deterministic Citation Grounding</div>
-            </div>
-            <div className="metric-divider"></div>
-            <div className="metric-col">
-              <div className="metric-val text-cyan">84%</div>
-              <div className="metric-lbl">Preclinical Discovery Cycle Reduction</div>
-            </div>
-            <div className="metric-divider"></div>
-            <div className="metric-col">
-              <div className="metric-val text-cyan">&lt; 3.2s</div>
-              <div className="metric-lbl">Multi-Agent Literature Retrieval</div>
-            </div>
-          </div>
+        <div className="container research-capabilities-strip" aria-label="Core platform capabilities">
+          <div><span className="capability-index">01</span><span><strong>Literature retrieval</strong><small>PubMed and Europe PMC</small></span></div>
+          <div><span className="capability-index">02</span><span><strong>Evidence verification</strong><small>Claims linked to source text</small></span></div>
+          <div><span className="capability-index">03</span><span><strong>Research synthesis</strong><small>Comparisons, gaps and reports</small></span></div>
         </div>
       </section>
 
@@ -178,9 +190,9 @@ export default function Home() {
           =================================================================== */}
       <section className="container studio-section">
         <div className="section-head-bar">
-          <span className="badge-pill">INTERACTIVE SIMULATION STUDIO</span>
-          <h2>BIOMOLECULAR TARGET & PHARMACOKINETIC SCANNER</h2>
-          <p>Inspect real-time target binding affinity, blood-brain barrier penetration, and peer-reviewed concordance for candidate drugs.</p>
+          <span className="badge-pill">CANDIDATE EXPLORER · ILLUSTRATIVE DATA</span>
+          <h2>COMPOUND & MECHANISM EXPLORER</h2>
+          <p>Explore example compound profiles, proposed mechanisms, and research questions. Values shown in this interactive example are illustrative and require source-level validation.</p>
         </div>
 
         {/* Compound Selector Tabs */}
@@ -209,11 +221,11 @@ export default function Home() {
             <div className="viewfinder-top-bar">
               <div className="vf-status-group">
                 <span className={`status-indicator-light ${isScanning ? 'pulse-green' : 'paused'}`}></span>
-                <span className="vf-channel-title">SPECTROMETRY PROBE // {activeDrug.drug.toUpperCase()}</span>
+                <span className="vf-channel-title">COMPOUND PROFILE // {activeDrug.drug.toUpperCase()}</span>
               </div>
               <div className="vf-meta-tags">
-                <span className="meta-badge">FOV: 0.12 Å</span>
-                <span className="meta-badge cyan">KINETICS: LIVE</span>
+                <span className="meta-badge">MODEL VIEW</span>
+                <span className="meta-badge cyan">EXAMPLE DATA</span>
               </div>
             </div>
 
@@ -310,8 +322,8 @@ export default function Home() {
           {/* Right Column: Interactive Parameter Tuning & Action Console */}
           <div className="studio-control-card glass-panel">
             <div className="control-card-head">
-              <h4>STUDIO PARAMETER TUNING</h4>
-              <span className="badge-pill green">CALIBRATED</span>
+              <h4>EVIDENCE FILTERS</h4>
+              <span className="badge-pill green">USER-DEFINED</span>
             </div>
 
             {/* Slider 1: Evidence Consensus */}
@@ -327,7 +339,7 @@ export default function Home() {
                 value={evidenceThreshold} 
                 onChange={e => setEvidenceThreshold(Number(e.target.value))} 
               />
-              <span className="slider-hint">Filters out low-confidence hypotheses lacking multi-paper concordant findings.</span>
+              <span className="slider-hint">Set a review threshold for comparing evidence in a research run.</span>
             </div>
 
             {/* Slider 2: Kd Affinity Stringency */}
@@ -343,7 +355,7 @@ export default function Home() {
                 value={kdThreshold} 
                 onChange={e => setKdThreshold(Number(e.target.value))} 
               />
-              <span className="slider-hint">Restricts molecular targets to nanomolar therapeutic concentrations.</span>
+              <span className="slider-hint">Use affinity as one research filter; it does not establish clinical efficacy.</span>
             </div>
 
             {/* Status Breakdown Box */}
@@ -362,7 +374,7 @@ export default function Home() {
               </div>
               <div className="status-item-row">
                 <span className="status-k">505(b)(2) Regulatory Feasibility:</span>
-                <span className="status-v text-emerald">High (Accelerated Exemption)</span>
+                <span className="status-v text-emerald">Requires regulatory review</span>
               </div>
             </div>
 
@@ -396,7 +408,7 @@ export default function Home() {
         <div className="section-head-bar">
           <span className="badge-pill">AGENTIC WORKFLOW PIPELINE</span>
           <h2>FOUR-TIER COGNITIVE DISCOVERY ENGINE</h2>
-          <p>Every hypothesis is synthesized, audited, and verified by dedicated autonomous agents with zero hallucinations.</p>
+          <p>The workflow retrieves literature, synthesizes candidate findings, and flags claims for source-level review.</p>
         </div>
 
         <div className="workflow-cards-grid">

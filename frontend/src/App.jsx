@@ -18,6 +18,7 @@ import './pages/ReportsPage.css'
 
 // Keep this last: it is the single source of truth for visual tokens and surfaces.
 import './clay-theme.css'
+import './home-page-fix.css'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
